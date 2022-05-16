@@ -3,7 +3,7 @@ using Data.Repositories;
 using System.Threading.Tasks;
 using Domain.Models;
 
-namespace Api.Services
+namespace Application.Services
 {
     public class IpTrackerService : IIpTrackerService
     {

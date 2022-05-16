@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Domain.Models;
 
-namespace Api.Services
+namespace Application.Services
 {
     public interface IIpTrackerService
     {

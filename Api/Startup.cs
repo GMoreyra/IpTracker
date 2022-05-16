@@ -1,7 +1,7 @@
 using AutoMapper;
-using Api.Mapper;
+using Mapping.Profiles;
 using Data.Repositories;
-using Api.Services;
+using Application.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
