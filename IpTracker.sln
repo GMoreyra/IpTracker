@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IpTracker", "IpTracker\IpTracker.csproj", "{A9BE1B0A-46EA-4D30-805D-2097BB954F0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IpTrackerTests", "IpTrackerTests\IpTrackerTests.csproj", "{00C14F40-2F07-4455-8C1A-72D0A8CBA11B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{0A43FA28-685C-4A8D-8443-0CA6195CB9D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A9BE1B0A-46EA-4D30-805D-2097BB954F0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9BE1B0A-46EA-4D30-805D-2097BB954F0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9BE1B0A-46EA-4D30-805D-2097BB954F0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9BE1B0A-46EA-4D30-805D-2097BB954F0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00C14F40-2F07-4455-8C1A-72D0A8CBA11B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00C14F40-2F07-4455-8C1A-72D0A8CBA11B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00C14F40-2F07-4455-8C1A-72D0A8CBA11B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00C14F40-2F07-4455-8C1A-72D0A8CBA11B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A43FA28-685C-4A8D-8443-0CA6195CB9D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A43FA28-685C-4A8D-8443-0CA6195CB9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A43FA28-685C-4A8D-8443-0CA6195CB9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A43FA28-685C-4A8D-8443-0CA6195CB9D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1FE19683-835C-49B7-A2CA-6DE382CE03A7}
+	EndGlobalSection
+EndGlobal
