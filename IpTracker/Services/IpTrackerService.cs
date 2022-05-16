@@ -18,7 +18,7 @@ namespace IpTracker.Services
         public async Task<IpInfo> GetAllInfoBasedOnSearchCritera(string ipNumber)
         {
             var ipWhoIsData = await _getWhoIs.ReturnCountryInfo(ipNumber);
-            ipWhoIsData.CurrenciesDollarValue = await _getWhoIs.ReturnMoneyInfo(ipWhoIsData.CurrenciesList);
+            ipWhoIsData.CurrenciesDollarValue = await _getWhoIs.ReturnMoneyInfo(ipWhoIsData.GetCurrenciesList());
 
             return _mapper.Map<IpInfo>(ipWhoIsData);
         }

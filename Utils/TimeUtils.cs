@@ -19,7 +19,7 @@ namespace Utils
                 }
                 else
                 {
-                    var timeNoWhiteSpace = String.Concat(time.Where(c => !Char.IsWhiteSpace(c)));
+                    var timeNoWhiteSpace = string.Concat(time.Where(c => !char.IsWhiteSpace(c)));
                     var onlyNumber = timeNoWhiteSpace.Replace("UTC", "").Replace(":00", "");
                     var dateModified = dateNowUtcFormat.AddHours(double.Parse(onlyNumber));
 

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace IpTracker
+﻿namespace IpTracker
 {
     public class IpInfo
     {

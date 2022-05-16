@@ -8,6 +8,7 @@ namespace IpTracker.Repositories
 {
     public class IpTrackerRepository : IIpTrackerRepository
     {
+        private static readonly string _apiKey = "API KEY"; 
         public async Task<IpToLocationModel> ReturnCountryInfo(string ipNumber)
         {
             const string url = "https://api.apilayer.com/ip_to_location/";
@@ -26,7 +27,6 @@ namespace IpTracker.Repositories
         {
             const string url = "https://api.apilayer.com/fixer/";
             var results = new List<string>();
-            currenciesCode.Remove("USD");
             
             foreach (var code in currenciesCode)
             {
@@ -47,7 +47,7 @@ namespace IpTracker.Repositories
         {
             var client = new RestClient(url);
             var request = new RestRequest(parameter);
-            request.AddHeader("apikey", "");
+            request.AddHeader("apikey", _apiKey);
             var response = await client.ExecuteGetAsync(request);
 
             return response;

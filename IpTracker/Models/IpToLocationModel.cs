@@ -18,29 +18,28 @@ namespace IpTracker.Models
             public string Code { get; set; }
         }
 
-        public List<string> CurrenciesList
+        public List<string> GetCurrenciesList()
         {
-            get
-            {
-                var _CurrenciesList = new List<string>();
-                Currencies.ForEach(x => _CurrenciesList.Add(x.Code.ToString()));
-                return _CurrenciesList;                
-            }
+            var _currenciesList = new List<string>();
+            Currencies.ForEach(x => _currenciesList.Add(x.Code.ToString()));
+
+            return _currenciesList;
         }
 
         public string GetDistance()
         {
-            return DistanceUtils.DistanceToBA(Latitude, Longitude).ToString() + " KMs";
+            return $"{DistanceUtils.DistanceToBA(Latitude, Longitude)} KMs";
         }
 
         public string GetCurrency()
         {
             var currency = string.Empty;
             var index = 0;
+            var currencyList = GetCurrenciesList();
 
-            CurrenciesList.ForEach(c =>
+            currencyList.ForEach(c =>
             {
-                currency = c + " (1 " + c + " = " + CurrenciesDollarValue[index++] + " U$S) o";
+                currency = $"{c} (1 {c} = {CurrenciesDollarValue[index++]} U$S) o ";
             });
 
             return currency.TrimEnd('o', ' ');
@@ -54,3 +53,4 @@ namespace IpTracker.Models
         }
     }
 }
+

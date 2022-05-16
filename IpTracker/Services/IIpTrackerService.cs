@@ -4,6 +4,6 @@ namespace IpTracker.Services
 {
     public interface IIpTrackerService
     {
-        Task<IpInfo> GetAllInfoBasedOnSearchCritera(string searchCritera);
+        Task<IpInfo> GetAllInfoBasedOnSearchCritera(string ipNumber);
     }
 }
