@@ -8,12 +8,14 @@ namespace Data.Repositories
 {
     public class IpTrackerRepository : IIpTrackerRepository
     {
-        private static readonly string _apiKey = "API KEY"; 
+        private static readonly string _apiKey = "z6MKj5YtvvtUnORpxxvASLIUvzfeo4Aq";
+        private static readonly string _urlIpToLocation = "https://api.apilayer.com/ip_to_location/";
+        private static readonly string _urlFixer = "https://api.apilayer.com/fixer/";
+
         public async Task<IpToLocationModel> ReturnCountryInfo(string ipNumber)
         {
-            const string url = "https://api.apilayer.com/ip_to_location/";
             var ipToLocation = new IpToLocationModel();
-            var response = await GetResponseFromAPI(ipNumber, url);
+            var response = await GetResponseFromAPI(ipNumber, _urlIpToLocation);
 
             if (response.IsSuccessful)
             {
@@ -25,13 +27,12 @@ namespace Data.Repositories
 
         public async Task<List<string>> ReturnMoneyInfo(List<string> currenciesCode)
         {
-            const string url = "https://api.apilayer.com/fixer/";
             var results = new List<string>();
             
             foreach (var code in currenciesCode)
             {
                 var parameters = string.Format("convert?to={0}&from={1}&amount={2}", "USD", code, "1");
-                var response = await GetResponseFromAPI(parameters, url);
+                var response = await GetResponseFromAPI(parameters, _urlFixer);
 
                 if (response.IsSuccessful)
                 {

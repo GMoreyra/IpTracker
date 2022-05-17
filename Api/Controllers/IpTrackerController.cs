@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Domain.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Api.Controllers
 {
@@ -16,11 +17,17 @@ namespace Api.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        [Route("{ipNumber}")]
+        /// <summary>
+        /// Returns the ip info based on the ip number
+        /// </summary>
+        /// <param name="ipNumber">Ip number</param>
+        /// <returns></returns>
+        [HttpGet("{ipNumber}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public Task<IpInfo> GetData(string ipNumber)
         {
-            var response = _service.GetAllInfoBasedOnSearchCritera(ipNumber);
+            var response = _service.GetIpInfo(ipNumber);
 
             return response;
         }

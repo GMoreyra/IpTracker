@@ -5,6 +5,12 @@ namespace Application.Services
 {
     public interface IIpTrackerService
     {
-        Task<IpInfo> GetAllInfoBasedOnSearchCritera(string ipNumber);
+
+        /// <summary>
+        /// Returns the ip information based on the ip number
+        /// </summary>
+        /// <param name="ipNumber">Ip number</param>
+        /// <returns></returns>
+        Task<IpInfo> GetIpInfo(string ipNumber);
     }
 }
