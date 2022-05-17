@@ -20,6 +20,11 @@ namespace Domain.Models
 
         public List<string> GetCurrenciesList()
         {
+            if (Currencies == null)
+            {
+                return new List<string>();
+            }
+
             var _currenciesList = new List<string>();
             Currencies.ForEach(x => _currenciesList.Add(x.Code.ToString()));
 

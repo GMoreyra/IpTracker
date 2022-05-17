@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using Utils;
+using Shouldly;
 
 namespace Tests
 {
@@ -17,11 +18,19 @@ namespace Tests
         };
 
         [Fact]
+        public void TimeToUTC_Should_Return_Empty_Dictionary()
+        {
+            var result = TimeUtils.TimeToUTCDictionary(new List<string>());
+
+            result.Count.ShouldBe(0);
+        }
+
+        [Fact]
         public void TimeToUTC_Should_Return_Dictionary()
         {
             var result = TimeUtils.TimeToUTCDictionary(_utcTimeList);
 
-            Assert.IsType<Dictionary<string, DateTime>>(result);
+            result.ShouldBeOfType<Dictionary<string,DateTime>>();
         }
 
         [Fact]
@@ -34,7 +43,7 @@ namespace Tests
                 result.ContainsKey("UTC+00:00") &&
                 result.ContainsKey("UTC");
 
-            Assert.True(containsAll);
+            containsAll.ShouldBeTrue();
         }
 
         [Fact]

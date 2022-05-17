@@ -38,8 +38,13 @@ namespace Utils
             return result;
         }
 
-        static public double DistanceToBA(string latitude, string longitude)
+        static public double? DistanceToBA(string latitude, string longitude)
         {
+            if (string.IsNullOrWhiteSpace(latitude) || string.IsNullOrWhiteSpace(longitude))
+            {
+                return null;
+            }
+
             var lat = StringToDouble(latitude);
             var lon = StringToDouble(longitude);
 
