@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models
 {
-    public class IpInfo
+    public class IpInfoModel
     {
         public string Country { get; set; }
         public string ISOCode { get; set; }

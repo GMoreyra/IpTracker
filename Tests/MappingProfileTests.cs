@@ -10,7 +10,7 @@ namespace Tests
     public class MappingProfileTests
     {
         private IpToLocationModel _ipToLocationModel;
-        private IpInfo _ipInfoMode;
+        private IpInfoModel _ipInfoMode;
         private IMapper _mapper;
 
         private void Init_Test()
@@ -18,7 +18,7 @@ namespace Tests
             _ipToLocationModel = IpToLocationMock.GetIpToLocationModelMock();
             _mapper = new MapperConfiguration(m =>
             {
-                m.AddProfile(new MappingProfile());
+                m.AddProfile(new IpLocationToIpInfoProfile());
             }).CreateMapper();
 
 
@@ -35,7 +35,7 @@ namespace Tests
         public void Mapping_Should_Mapp_Full_Data()
         {
             Init_Test();
-            _ipInfoMode = _mapper.Map<IpInfo>(_ipToLocationModel);
+            _ipInfoMode = _mapper.Map<IpInfoModel>(_ipToLocationModel);
 
             _ipInfoMode.ShouldNotBeNull();
             _ipInfoMode.Country.ShouldBe(_ipToLocationModel.Country_name);
@@ -53,7 +53,7 @@ namespace Tests
             _ipToLocationModel.Timezones = null;
             _ipToLocationModel.CurrenciesDollarValue = null;
             _ipToLocationModel.Currencies = null;
-            _ipInfoMode = _mapper.Map<IpInfo>(_ipToLocationModel);
+            _ipInfoMode = _mapper.Map<IpInfoModel>(_ipToLocationModel);
 
             _ipInfoMode.ShouldNotBeNull();
             _ipInfoMode.Currency.ShouldBe("Missing information");

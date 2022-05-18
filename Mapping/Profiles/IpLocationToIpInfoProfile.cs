@@ -3,11 +3,11 @@ using Domain.Models;
 
 namespace Mapping.Profiles
 {
-    public class MappingProfile : Profile
+    public class IpLocationToIpInfoProfile : Profile
     {
-        public MappingProfile()
+        public IpLocationToIpInfoProfile()
         {
-            CreateMap<IpToLocationModel, IpInfo>()
+            CreateMap<IpToLocationModel, IpInfoModel>()
                 .ForMember(d => d.Country, o => o.MapFrom(s => s.Country_name))
                 .ForMember(d => d.ISOCode, o => o.MapFrom(s => s.Country_code))
                 .ForMember(d => d.Timezone, o => o.MapFrom(s => s.GetTimeZone()))

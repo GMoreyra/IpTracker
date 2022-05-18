@@ -21,7 +21,7 @@ namespace Tests
         {
             var mapper = new MapperConfiguration(m =>
             {
-                m.AddProfile(new MappingProfile());
+                m.AddProfile(new IpLocationToIpInfoProfile());
             }).CreateMapper();
 
             _mockRepo = new Mock<IIpTrackerRepository>();
@@ -43,7 +43,7 @@ namespace Tests
             Init_Test();
             var result = await _service.GetIpInfo("1.0.0");
 
-            result.ShouldBeOfType<IpInfo>();
+            result.ShouldBeOfType<IpInfoModel>();
         }
     }
 }

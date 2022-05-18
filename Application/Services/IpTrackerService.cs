@@ -16,13 +16,13 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IpInfo> GetIpInfo(string ipNumber)
+        public async Task<IpInfoModel> GetIpInfo(string ipNumber)
         {
             var ipWhoIsData = await _getWhoIs.ReturnCountryInfo(ipNumber);
             var currencyList = ipWhoIsData.GetCurrenciesList();
             ipWhoIsData.CurrenciesDollarValue = await _getWhoIs.ReturnMoneyInfo(currencyList);
 
-            return _mapper.Map<IpInfo>(ipWhoIsData);
+            return _mapper.Map<IpInfoModel>(ipWhoIsData);
         }
     }
 }

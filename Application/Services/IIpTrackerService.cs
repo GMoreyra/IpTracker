@@ -11,6 +11,6 @@ namespace Application.Services
         /// </summary>
         /// <param name="ipNumber">Ip number</param>
         /// <returns></returns>
-        Task<IpInfo> GetIpInfo(string ipNumber);
+        Task<IpInfoModel> GetIpInfo(string ipNumber);
     }
 }

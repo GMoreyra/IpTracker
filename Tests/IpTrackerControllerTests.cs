@@ -17,7 +17,7 @@ namespace Tests
         {
             _mockService = new Mock<IIpTrackerService>();
             _controller = new IpTrackerController(_mockService.Object);
-            _mockService.Setup(p => p.GetIpInfo(It.IsAny<string>())).ReturnsAsync(new IpInfo());
+            _mockService.Setup(p => p.GetIpInfo(It.IsAny<string>())).ReturnsAsync(new IpInfoModel());
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace Tests
             Init_Test();
             var result = await _controller.GetData("1.0.0");
 
-            result.ShouldBeOfType<IpInfo>();
+            result.ShouldBeOfType<IpInfoModel>();
         }
     }
 }

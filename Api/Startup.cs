@@ -35,7 +35,7 @@ namespace Api
 
             var mapperConfig = new MapperConfiguration(m =>
             {
-                m.AddProfile(new MappingProfile());
+                m.AddProfile(new IpLocationToIpInfoProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();

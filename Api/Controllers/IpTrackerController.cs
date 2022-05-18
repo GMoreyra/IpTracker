@@ -25,7 +25,7 @@ namespace Api.Controllers
         [HttpGet("{ipNumber}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public Task<IpInfo> GetData(string ipNumber)
+        public Task<IpInfoModel> GetData(string ipNumber)
         {
             var response = _service.GetIpInfo(ipNumber);
 
