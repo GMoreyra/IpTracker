@@ -53,10 +53,20 @@ namespace Domain.Models
                 return _missingData;
             }
 
-            currencyList.ForEach(c =>
+            if ((CurrenciesDollarValue == null || CurrenciesDollarValue.Count == 0))
             {
-                currency = $"{c} (1 {c} = {CurrenciesDollarValue[index++]} U$S) o ";
-            });
+                currencyList.ForEach(c =>
+                {
+                    currency = $"{c} o ";
+                });
+            }
+            else
+            {
+                currencyList.ForEach(c =>
+                {
+                    currency = $"{c} (1 {c} = {CurrenciesDollarValue[index++]} U$S) o ";
+                });
+            }
 
             return currency.TrimEnd('o', ' ');
         }

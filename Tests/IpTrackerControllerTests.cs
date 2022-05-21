@@ -1,6 +1,7 @@
 ﻿using Api.Controllers;
 using Application.Services;
 using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
 using System;
@@ -28,12 +29,22 @@ namespace Tests
         }
 
         [Fact]
-        public async void GetData_Should_Return_IpInfo()
+        public async void GetData_Should_Return_Ok()
         {
             Init_Test();
             var result = await _controller.GetData("1.0.0");
 
-            result.ShouldBeOfType<IpInfoModel>();
+            result.ShouldBeOfType<OkObjectResult>();
+        }
+
+        [Fact]
+        public async void GetData_Should_Return_BadRequest()
+        {
+            Init_Test();
+            _mockService.Setup(p => p.GetIpInfo(It.IsAny<string>())).ReturnsAsync(() => null);
+            var result = await _controller.GetData("1.0.0");
+
+            result.ShouldBeOfType<NotFoundResult>();
         }
     }
 }
