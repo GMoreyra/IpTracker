@@ -1,29 +1,19 @@
-<h1 id="tableLabel">Ip to trace</h1>
+<div style="text-align:center; margin-top:10%;">
+  <h1>Ip to trace</h1>
+  <p>This component track an specific ip and returns it´s data.</p>
 
-<p>This component track an specific ip and returns it´s data.</p>
+  <div>
+    <input #ipNumber
+           (blur)="checkIp(ipNumber.value); ipNumber.value='' ">
+    <button type="button" (click)="checkIp(ipNumber.value)">Check IP</button>
+  </div>
 
-<input #ipNumber
-       (blur)="checkIp(ipNumber.value); ipNumber.value='' ">
+  <div *ngIf="country">
+    <p> Country name = {{ country.country }}</p>
+    <p> Country code = {{ country.isoCode }}</p>
+    <p> Timezones = {{ country.timezone }}</p>
+    <p> Currencies = {{ country.currency }}</p>
+    <p> Distance to Buenos Aires = {{ country.distanceToBA }}</p>
+  </div>
+</div>
 
-<button type="button" (click)="checkIp(ipNumber.value)">Check IP</button>
-
-<p *ngIf="!country"><em>Loading...</em></p>
-
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="country">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>ISO Code</th>
-      <th>Language</th>
-      <th>Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{ country.name }}</td>
-      <td>{{ country.code }}</td>
-      <td>{{ country.language }}</td>
-      <td>{{ country.date }}</td>
-    </tr>
-  </tbody>
-</table>

@@ -30,11 +30,9 @@ export class TraceIpComponent {
 }
 
 interface Country {
-  name: string;
-  code: string;
-  language: string;
-  date: string;
+  country: string;
+  isoCode: string;
+  timezone: string;
   currency: string;
-  dollarValue: number;
-  distanceToBA: number;
+  distanceToBA: string;
 }
