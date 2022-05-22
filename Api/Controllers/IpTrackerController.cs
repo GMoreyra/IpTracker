@@ -1,8 +1,8 @@
 ﻿using Application.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Domain.Models;
-using Microsoft.AspNetCore.Http;
+using Utils;
 
 namespace Api.Controllers
 {
@@ -27,6 +27,11 @@ namespace Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetData(string ipNumber)
         {
+            if (!StringUtils.ValidateString(ipNumber))
+            {
+                return BadRequest();
+            }
+
             var response = await _service.GetIpInfo(ipNumber);
 
             if (response is null)
