@@ -3,9 +3,9 @@
   <p>This component track an specific ip and returns it´s data.</p>
 
   <div>
-    <input #ipNumber
-           (blur)="checkIp(ipNumber.value); ipNumber.value='' ">
-    <button type="button" (click)="checkIp(ipNumber.value)">Check IP</button>
+    <input #ipAddress
+           (blur)="checkIp(ipAddress.value); ipAddress.value='' ">
+    <button type="button" (click)="checkIp(ipAddress.value)">Check IP</button>
   </div>
 
   <div *ngIf="country">

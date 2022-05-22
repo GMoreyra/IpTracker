@@ -32,7 +32,7 @@ namespace Tests
         public async void GetData_Should_Return_Ok()
         {
             Init_Test();
-            var result = await _controller.GetData("1.0.0");
+            var result = await _controller.GetGeolocation("1.0.0");
 
             result.ShouldBeOfType<OkObjectResult>();
         }
@@ -41,7 +41,7 @@ namespace Tests
         public async void GetData_Should_Return_BadRequest()
         {
             Init_Test();
-            var result = await _controller.GetData("1.0..0");
+            var result = await _controller.GetGeolocation("1.0..0");
 
             result.ShouldBeOfType<BadRequestResult>();
         }
@@ -51,7 +51,7 @@ namespace Tests
         {
             Init_Test();
             _mockService.Setup(p => p.GetIpInfo(It.IsAny<string>())).ReturnsAsync(() => null);
-            var result = await _controller.GetData("1.0.0");
+            var result = await _controller.GetGeolocation("1.0.0");
 
             result.ShouldBeOfType<NotFoundResult>();
         }

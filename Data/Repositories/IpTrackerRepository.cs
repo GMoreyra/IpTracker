@@ -20,10 +20,10 @@ namespace Data.Repositories
             _memoryCache = memoryCache;
         }
 
-        public async Task<IpToLocationModel> ReturnCountryInfo(string ipNumber)
+        public async Task<IpToLocationModel> ReturnCountryInfo(string ipAddress)
         {
             var ipToLocation = new IpToLocationModel();
-            var response = await GetResponseFromAPI(ipNumber, _urlIpToLocation);
+            var response = await GetResponseFromAPI(ipAddress, _urlIpToLocation);
 
             if (response.IsSuccessful)
             {

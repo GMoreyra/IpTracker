@@ -16,9 +16,9 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public async Task<IpInfoModel> GetIpInfo(string ipNumber)
+        public async Task<IpInfoModel> GetIpInfo(string ipAddress)
         {
-            var ipWhoIsData = await _getWhoIs.ReturnCountryInfo(ipNumber);
+            var ipWhoIsData = await _getWhoIs.ReturnCountryInfo(ipAddress);
             var currencyList = ipWhoIsData.GetCurrenciesList();
             ipWhoIsData.CurrenciesDollarValue = await _getWhoIs.ReturnMoneyInfo(currencyList);
 

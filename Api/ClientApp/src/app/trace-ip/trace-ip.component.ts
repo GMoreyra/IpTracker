@@ -19,9 +19,9 @@ export class TraceIpComponent {
     this.completeUrl = this.baseUrl + 'iptracker';
   }
 
-  checkIp(ipNumber: string) {
-    if (ipNumber) {
-      const url = `${this.completeUrl}/${ipNumber}`;
+  checkIp(ipAddress: string) {
+    if (ipAddress) {
+      const url = `${this.completeUrl}/${ipAddress}`;
       this.http.get<Country>(url).subscribe(result => {
         this.country = result;
       }, error => console.error(error));

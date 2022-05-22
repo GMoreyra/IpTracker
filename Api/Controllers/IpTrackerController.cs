@@ -18,21 +18,21 @@ namespace Api.Controllers
         }
 
         /// <summary>
-        /// Returns the ip info based on the ip number
+        /// Returns the ip info based on the ip address
         /// </summary>
-        /// <param name="ipNumber">Ip number</param>
+        /// <param name="ipAddress">ip address</param>
         /// <returns></returns>
-        [HttpGet("{ipNumber}")]
+        [HttpGet("{ipAddress}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetData(string ipNumber)
+        public async Task<IActionResult> GetGeolocation(string ipAddress)
         {
-            if (!StringUtils.ValidateString(ipNumber))
+            if (!StringUtils.ValidateString(ipAddress))
             {
                 return BadRequest();
             }
 
-            var response = await _service.GetIpInfo(ipNumber);
+            var response = await _service.GetIpInfo(ipAddress);
 
             if (response is null)
             {

@@ -7,10 +7,10 @@ namespace Application.Services
     {
 
         /// <summary>
-        /// Returns the ip information based on the ip number
+        /// Returns the ip information based on the ip address
         /// </summary>
-        /// <param name="ipNumber">Ip number</param>
+        /// <param name="ipAddress">ip address</param>
         /// <returns></returns>
-        Task<IpInfoModel> GetIpInfo(string ipNumber);
+        Task<IpInfoModel> GetIpInfo(string ipAddress);
     }
 }

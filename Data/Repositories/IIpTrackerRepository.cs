@@ -8,11 +8,11 @@ namespace Data.Repositories
     {
 
         /// <summary>
-        /// Returns the country information based on the ip number
+        /// Returns the country information based on the ip address
         /// </summary>
-        /// <param name="ipNumber">Ip number</param>
+        /// <param name="ipAddress">ip address</param>
         /// <returns></returns>
-        Task<IpToLocationModel> ReturnCountryInfo(string ipNumber);
+        Task<IpToLocationModel> ReturnCountryInfo(string ipAddress);
 
 
         /// <summary>
