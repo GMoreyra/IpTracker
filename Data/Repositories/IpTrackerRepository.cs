@@ -1,6 +1,8 @@
 ﻿using Domain.Models;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using RestSharp;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,6 +13,12 @@ namespace Data.Repositories
         private static readonly string _apiKey = "z6MKj5YtvvtUnORpxxvASLIUvzfeo4Aq";
         private static readonly string _urlIpToLocation = "https://api.apilayer.com/ip_to_location/";
         private static readonly string _urlFixer = "https://api.apilayer.com/fixer/";
+        private readonly IMemoryCache _memoryCache;
+
+        public IpTrackerRepository(IMemoryCache memoryCache)
+        {
+            _memoryCache = memoryCache;
+        }
 
         public async Task<IpToLocationModel> ReturnCountryInfo(string ipNumber)
         {
@@ -28,16 +36,27 @@ namespace Data.Repositories
         public async Task<List<string>> ReturnMoneyInfo(List<string> currenciesCode)
         {
             var results = new List<string>();
-            
+       
             foreach (var code in currenciesCode)
             {
-                var parameters = string.Format("convert?to={0}&from={1}&amount={2}", "USD", code, "1");
-                var response = await GetResponseFromAPI(parameters, _urlFixer);
+                var cached = _memoryCache.Get<string>(code);
 
-                if (response.IsSuccessful)
+                if (cached is null)
                 {
-                    var fixer = JsonConvert.DeserializeObject<FixerModel>(response.Content);
-                    results.Add(fixer.Result);
+                    var parameters = string.Format("convert?to={0}&from={1}&amount={2}", "USD", code, "1");
+                    var response = await GetResponseFromAPI(parameters, _urlFixer);
+
+                    if (response.IsSuccessful)
+                    {
+                        var fixer = JsonConvert.DeserializeObject<FixerModel>(response.Content);
+                        results.Add(fixer.Result);
+
+                        _memoryCache.Set(code, fixer.Result, TimeSpan.FromMinutes(30));
+                    }                   
+                }
+                else
+                {
+                    results.Add(cached);
                 }
             };
 
