@@ -29,7 +29,7 @@ namespace Api.Controllers
         {
             var response = await _service.GetIpInfo(ipNumber);
 
-            if (response == null)
+            if (response is null)
             {
                 return NotFound();
             }

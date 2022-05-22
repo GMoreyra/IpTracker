@@ -11,7 +11,7 @@ namespace Utils
             var utcTimes = new Dictionary<string, DateTime>();
             DateTime dateNowUtcFormat = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
 
-            if (time == null)
+            if (time is null)
             {
                 return utcTimes;
             }

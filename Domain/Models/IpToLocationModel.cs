@@ -21,7 +21,7 @@ namespace Domain.Models
 
         public List<string> GetCurrenciesList()
         {
-            if (Currencies == null || Currencies.Count == 0)
+            if (Currencies is null || Currencies.Count == 0)
             {
                 return new List<string>();
             }
@@ -48,12 +48,12 @@ namespace Domain.Models
             var index = 0;
             var currencyList = GetCurrenciesList();
 
-            if ((CurrenciesDollarValue == null || CurrenciesDollarValue.Count == 0) && currencyList.Count == 0)
+            if ((CurrenciesDollarValue is null || CurrenciesDollarValue.Count == 0) && currencyList.Count == 0)
             {
                 return _missingData;
             }
 
-            if ((CurrenciesDollarValue == null || CurrenciesDollarValue.Count == 0))
+            if ((CurrenciesDollarValue is null || CurrenciesDollarValue.Count == 0))
             {
                 currencyList.ForEach(c =>
                 {
@@ -73,7 +73,7 @@ namespace Domain.Models
 
         public string GetTimeZone()
         {
-            if (Timezones == null || Timezones.Count == 0)
+            if (Timezones is null || Timezones.Count == 0)
             {
                 return _missingData;
             }
