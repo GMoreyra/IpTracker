@@ -27,9 +27,9 @@ namespace Utils
         {
             var jsonData = await cache.GetStringAsync(recordId);
 
-            if (string.IsNullOrWhiteSpace(jsonData) || jsonData is null)
+            if (string.IsNullOrWhiteSpace(jsonData))
             {
-                return default(T);
+                return default;
             }
 
             return JsonSerializer.Deserialize<T>(jsonData);
