@@ -1,10 +1,10 @@
 ﻿using Domain.Models;
-using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using RestSharp;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Utils;
 
 namespace Data.Repositories
 {
@@ -13,9 +13,10 @@ namespace Data.Repositories
         private static readonly string _apiKey = "z6MKj5YtvvtUnORpxxvASLIUvzfeo4Aq";
         private static readonly string _urlIpToLocation = "https://api.apilayer.com/ip_to_location/";
         private static readonly string _urlFixer = "https://api.apilayer.com/fixer/";
-        private readonly IMemoryCache _memoryCache;
+        private static readonly string _currencykey = "Currency_";
+        private readonly IDistributedCache _memoryCache;
 
-        public IpTrackerRepository(IMemoryCache memoryCache)
+        public IpTrackerRepository(IDistributedCache memoryCache)
         {
             _memoryCache = memoryCache;
         }
@@ -36,10 +37,11 @@ namespace Data.Repositories
         public async Task<List<string>> ReturnMoneyInfo(List<string> currenciesCode)
         {
             var results = new List<string>();
-       
+
             foreach (var code in currenciesCode)
             {
-                var cached = _memoryCache.Get<string>(code);
+                var recordKey = _currencykey + code;
+                var cached = await _memoryCache.GetRecordAsync<string>(recordKey);
 
                 if (cached is null)
                 {
@@ -51,8 +53,8 @@ namespace Data.Repositories
                         var fixer = JsonConvert.DeserializeObject<FixerModel>(response.Content);
                         results.Add(fixer.Result);
 
-                        _memoryCache.Set(code, fixer.Result, TimeSpan.FromMinutes(30));
-                    }                   
+                        await _memoryCache.SetRecordAsync(recordKey, fixer.Result);
+                    }
                 }
                 else
                 {
@@ -63,7 +65,7 @@ namespace Data.Repositories
             return results;
         }
 
-        private static async Task<RestResponse> GetResponseFromAPI(string parameter, string url)
+        private async Task<RestResponse> GetResponseFromAPI(string parameter, string url)
         {
             var client = new RestClient(url);
             var request = new RestRequest(parameter);
