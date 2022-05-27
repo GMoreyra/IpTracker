@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:  
+  web:
+    container_name: iptracker_app
+    depends_on:
+      - "redis_image"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5024:5024"
+    links:
+      - "redis_image"
+
+  redis_image:
+    image: redis
+    container_name: cache
+    ports:
+      - "6379:6379"

@@ -1,11 +1,13 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
+#docker build -f api\Dockerfile -t iptracker .
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
+EXPOSE 5024
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+
 # Install NodeJs
 RUN apt-get update && \
 apt-get install -y wget && \
@@ -13,6 +15,7 @@ apt-get install -y gnupg2 && \
 wget -qO- https://deb.nodesource.com/setup_14.x | bash - && \
 apt-get install -y build-essential nodejs
 # End Install
+
 WORKDIR /src
 COPY ["Api/Api.csproj", "Api/"]
 COPY ["Utils/Utils.csproj", "Utils/"]
