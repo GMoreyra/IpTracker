@@ -14,5 +14,11 @@ namespace Utils
             var rx = new Regex(@"^\d+(\.\d+)*$");
             return rx.IsMatch(input);
         }
+
+        static public int StringKmsToInt(string input)
+        {
+            string result = input?.ToUpper()?.Replace(" KMS", "");
+            return int.Parse(result);
+        }
     }
 }

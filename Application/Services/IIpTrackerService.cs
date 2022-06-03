@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Models;
 
 namespace Application.Services
@@ -12,5 +13,7 @@ namespace Application.Services
         /// <param name="ipAddress">ip address</param>
         /// <returns></returns>
         Task<IpInfoModel> GetIpInfo(string ipAddress);
+
+        Task<List<StatisticModel>> GetStatistics();
     }
 }

@@ -21,5 +21,15 @@ namespace Data.Repositories
         /// <param name="currenciesCode">List of currencies codes</param>
         /// <returns></returns>
         Task<List<string>> ReturnMoneyInfo(List<string> currenciesCode);
+
+        /// <summary>
+        /// Add the IpInfoModel to the statistics
+        /// </summary>
+        /// <param name="ipInfoModel"></param>
+        void AddStatistic(IpInfoModel ipInfoModel);
+
+        Task<List<StatisticModel>> ReturnAllStatistics();
+
+        List<StatisticModel> ReturnMaxMinStatistics(List<StatisticModel> statisticModels);
     }
 }
