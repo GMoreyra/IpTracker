@@ -17,6 +17,11 @@ namespace Utils
 
         static public int StringKmsToInt(string input)
         {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return 0;
+            }
+
             string result = input?.ToUpper()?.Replace(" KMS", "");
             return int.Parse(result);
         }

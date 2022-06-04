@@ -29,5 +29,25 @@ namespace Tests
             var result = StringUtils.ValidateString(input);
             result.ShouldBeFalse();
         }
+
+        [InlineData("10 kms")]
+        [InlineData("100 KmS")]
+        [InlineData("1000 KMS")]
+        [Theory]
+        public void StringKmsToInt_Should_Return_Int(string input)
+        {
+            var result = StringUtils.StringKmsToInt(input);
+            result.ShouldBeOfType<int>();
+        }
+
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        [Theory]
+        public void StringKmsToInt_Should_Return_0(string input)
+        {
+            var result = StringUtils.StringKmsToInt(input);
+            result.ShouldBe(0);
+        }
     }
 }
