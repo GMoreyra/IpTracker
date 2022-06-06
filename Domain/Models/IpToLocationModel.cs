@@ -64,7 +64,7 @@ namespace Domain.Models
             {
                 currencyList.ForEach(c =>
                 {
-                    currency = $"{c} (1 {c} = {CurrenciesDollarValue[index++]} U$S) o ";
+                    currency = $"{c} (1 {c} = {CurrenciesDollarValue[index++]} USD) o ";
                 });
             }
 

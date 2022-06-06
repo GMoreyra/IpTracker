@@ -82,7 +82,6 @@ namespace Data.Repositories
                 {
                     var statistic = new StatisticModel()
                     {
-
                         CountryName = ipInfoModel.Country,
                         DistanceToBaKms = StringUtils.StringKmsToInt(ipInfoModel.DistanceToBA)
                     };
@@ -112,7 +111,7 @@ namespace Data.Repositories
 
         public async Task<List<StatisticModel>> ReturnAllStatistics()
         {
-            var alltatistics = new List<StatisticModel>();
+            var allStatistics = new List<StatisticModel>();
             using (var redis = ConnectionMultiplexer.Connect("localhost:6379,allowAdmin=true"))
             {
                 IDatabase db = redis.GetDatabase(0);
@@ -122,11 +121,12 @@ namespace Data.Repositories
                 {
                     var statsKey = key.Replace(KeyUtils.APP, "");
                     var result = await _memoryCache.GetRecordAsync<StatisticModel>(statsKey);
-                    alltatistics.Add(result);
+
+                    allStatistics.Add(result);
                 }
             }
 
-            return alltatistics;
+            return allStatistics;
         }
 
         public List<StatisticModel> ReturnMaxMinStatistics(List<StatisticModel> statisticModels)
