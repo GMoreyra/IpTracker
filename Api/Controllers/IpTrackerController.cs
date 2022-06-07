@@ -25,7 +25,7 @@ namespace Api.Controllers
         [HttpGet("{ipAddress}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetGeolocation(string ipAddress)
+        public async Task<IActionResult> GetGeolocationAsync(string ipAddress)
         {
             if (!StringUtils.ValidateString(ipAddress))
             {
@@ -33,6 +33,42 @@ namespace Api.Controllers
             }
 
             var response = await _service.GetIpInfo(ipAddress);
+
+            if (response is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Returns the statistics
+        /// </summary>
+        [HttpGet("statistic")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetStatisticsAsync()
+        {
+            var response = await _service.GetStatistics();
+
+            if (response is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Returns the average distance
+        /// </summary>
+        [HttpGet("average")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetAverageDistanceAsync()
+        {
+            var response = await _service.GetAverageDistance();
 
             if (response is null)
             {

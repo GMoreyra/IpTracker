@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Utils;
 
 namespace Api
 {
@@ -32,7 +33,7 @@ namespace Api
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = Configuration.GetConnectionString("Redis");
-                options.InstanceName = "IpTracker_";
+                options.InstanceName = KeyUtils.APP;
             });
 
             services.AddScoped<IIpTrackerService, IpTrackerService>();

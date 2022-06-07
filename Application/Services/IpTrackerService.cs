@@ -1,50 +1,76 @@
 ﻿using AutoMapper;
 using Data.Repositories;
-using System.Threading.Tasks;
 using Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
-using Utils;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Utils;
 
 namespace Application.Services
 {
     public class IpTrackerService : IIpTrackerService
     {
-        private static IIpTrackerRepository _getWhoIs;
+        private static IIpTrackerRepository _getWhoIsRepository;
         private static IMapper _mapper;
         private readonly IDistributedCache _memoryCache;
-        private static readonly string _adresskey = "IpAdress_";
 
         public IpTrackerService(IIpTrackerRepository getWhoIs, IMapper mapper, IDistributedCache memoryCache)
         {
-            _getWhoIs = getWhoIs;
+            _getWhoIsRepository = getWhoIs;
             _mapper = mapper;
             _memoryCache = memoryCache;
         }
 
         public async Task<IpInfoModel> GetIpInfo(string ipAddress)
         {
-            var recordKey = _adresskey + ipAddress;
+            IpInfoModel ipInfoModel;
+            var recordKey = KeyUtils.ADDRESS + ipAddress;
             var cached = await _memoryCache.GetRecordAsync<IpInfoModel>(recordKey);
 
             if (cached is null)
             {
-                var ipWhoIsData = await _getWhoIs.ReturnCountryInfo(ipAddress);
+                var ipWhoIsData = await _getWhoIsRepository.ReturnCountryInfo(ipAddress);
 
                 var currencyList = ipWhoIsData.GetCurrenciesList();
 
-                ipWhoIsData.CurrenciesDollarValue = await _getWhoIs.ReturnMoneyInfo(currencyList);
+                ipWhoIsData.CurrenciesDollarValue = await _getWhoIsRepository.ReturnMoneyInfo(currencyList);
 
                 var ipInfo = _mapper.Map<IpInfoModel>(ipWhoIsData);
 
-                await _memoryCache.SetRecordAsync(_adresskey + ipAddress, ipInfo, TimeSpan.FromHours(12));
+                await _memoryCache.SetRecordAsync(KeyUtils.ADDRESS + ipAddress, ipInfo, TimeSpan.FromHours(12));
 
-                return ipInfo;
+                ipInfoModel = ipInfo;
             }
             else
             {
-                return cached;
+                ipInfoModel = cached;
             }
+
+            SetStatistic(ipInfoModel);
+
+            return ipInfoModel;
+        }
+
+        private void SetStatistic(IpInfoModel ipInfoModel)
+        {
+            _getWhoIsRepository.AddStatistic(ipInfoModel);
+        }
+
+        public async Task<List<StatisticModel>> GetStatistics()
+        {
+            var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
+
+            return _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
+        }
+
+        public async Task<string> GetAverageDistance()
+        {
+            var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
+
+            var maxMinStatistics = _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
+
+            return _getWhoIsRepository.ReturnAverageDistanceStatistics(maxMinStatistics);
         }
     }
 }
