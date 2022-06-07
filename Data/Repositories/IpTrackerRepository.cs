@@ -17,6 +17,7 @@ namespace Data.Repositories
         private static readonly string _urlIpToLocation = "https://api.apilayer.com/ip_to_location/";
         private static readonly string _urlFixer = "https://api.apilayer.com/fixer/";
         private static readonly string _patternKey = KeyUtils.APP + KeyUtils.STATISTIC + "*";
+        private IpToLocationModel ipToLocation;
 
         private readonly IDistributedCache _memoryCache;
 
@@ -27,7 +28,7 @@ namespace Data.Repositories
 
         public async Task<IpToLocationModel> ReturnCountryInfo(string ipAddress)
         {
-            var ipToLocation = new IpToLocationModel();
+            ipToLocation = new IpToLocationModel();
             var response = await GetResponseFromAPI(ipAddress, _urlIpToLocation);
 
             if (response.IsSuccessful)
@@ -83,7 +84,7 @@ namespace Data.Repositories
                     var statistic = new StatisticModel()
                     {
                         CountryName = ipInfoModel.Country,
-                        DistanceToBaKms = StringUtils.StringKmsToInt(ipInfoModel.DistanceToBA)
+                        DistanceToBaInKms = StringUtils.StringKmsToInt(ipInfoModel.DistanceToBA)
                     };
 
                     await _memoryCache.SetRecordAsync(statsKey, statistic, TimeSpan.FromHours(24));
@@ -129,6 +130,27 @@ namespace Data.Repositories
             return allStatistics;
         }
 
+        public string ReturnAverageDistanceStatistics(List<StatisticModel> statisticModels)
+        {
+            if (statisticModels is null || statisticModels.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            if (statisticModels.Count == 2)
+            {
+                var averageDistance = (statisticModels[0].InvocationCounter * statisticModels[0].DistanceToBaInKms +
+                    statisticModels[1].InvocationCounter * statisticModels[1].DistanceToBaInKms) /
+                    (statisticModels[0].InvocationCounter + statisticModels[1].InvocationCounter);
+
+                return $"{averageDistance} KMs";
+            }
+            else
+            {
+                return $"{statisticModels[0].DistanceToBaInKms} KMs";
+            }
+        }
+
         public List<StatisticModel> ReturnMaxMinStatistics(List<StatisticModel> statisticModels)
         {
             if (statisticModels is null || statisticModels.Count == 0)
@@ -152,15 +174,15 @@ namespace Data.Repositories
 
             if (method.ToUpper() == "MAX")
             {
-                distanceValue = statisticModels.Max(d => d.DistanceToBaKms);
+                distanceValue = statisticModels.Max(d => d.DistanceToBaInKms);
             }
             else if (method.ToUpper() == "MIN")
             {
-                distanceValue = statisticModels.Min(d => d.DistanceToBaKms);
+                distanceValue = statisticModels.Min(d => d.DistanceToBaInKms);
             }
             
-            var invocationValue = statisticModels.Where(x => x.DistanceToBaKms == distanceValue).Max(x => x.InvocationCounter);
-            var statisticModel = statisticModels.Where(x => x.DistanceToBaKms == distanceValue && x.InvocationCounter == invocationValue).First();
+            var invocationValue = statisticModels.Where(x => x.DistanceToBaInKms == distanceValue).Max(x => x.InvocationCounter);
+            var statisticModel = statisticModels.Where(x => x.DistanceToBaInKms == distanceValue && x.InvocationCounter == invocationValue).First();
 
             return statisticModel;
         }

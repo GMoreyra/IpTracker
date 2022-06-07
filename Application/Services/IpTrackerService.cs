@@ -52,6 +52,11 @@ namespace Application.Services
             return ipInfoModel;
         }
 
+        private void SetStatistic(IpInfoModel ipInfoModel)
+        {
+            _getWhoIsRepository.AddStatistic(ipInfoModel);
+        }
+
         public async Task<List<StatisticModel>> GetStatistics()
         {
             var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
@@ -59,9 +64,13 @@ namespace Application.Services
             return _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
         }
 
-        private void SetStatistic(IpInfoModel ipInfoModel)
+        public async Task<string> GetAverageDistance()
         {
-            _getWhoIsRepository.AddStatistic(ipInfoModel);
+            var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
+
+            var maxMinStatistics = _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
+
+            return _getWhoIsRepository.ReturnAverageDistanceStatistics(maxMinStatistics);
         }
     }
 }

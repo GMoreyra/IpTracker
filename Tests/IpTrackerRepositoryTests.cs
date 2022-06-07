@@ -30,37 +30,37 @@ namespace Tests
                 new StatisticModel
                 {
                     CountryName = "Argentina",
-                    DistanceToBaKms = 100,
+                    DistanceToBaInKms = 100,
                     InvocationCounter = 2
                 },
                 new StatisticModel
                 {
                     CountryName = "Colombia",
-                    DistanceToBaKms = 50,
+                    DistanceToBaInKms = 50,
                     InvocationCounter = 1
                 },
                 new StatisticModel
                 {
                     CountryName = "Peru",
-                    DistanceToBaKms = 10,
+                    DistanceToBaInKms = 10,
                     InvocationCounter = 3
                 },
                 new StatisticModel
                 {
                     CountryName = "Canada",
-                    DistanceToBaKms = 1001,
+                    DistanceToBaInKms = 1001,
                     InvocationCounter = 3
                 },
                 new StatisticModel
                 {
                     CountryName = "Bolivia",
-                    DistanceToBaKms = 1001,
+                    DistanceToBaInKms = 1001,
                     InvocationCounter = 5
                 },
                 new StatisticModel
                 {
                     CountryName = "Paraguay",
-                    DistanceToBaKms = 1001,
+                    DistanceToBaInKms = 1001,
                     InvocationCounter = 4
                 }
             };
