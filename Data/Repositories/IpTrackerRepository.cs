@@ -113,10 +113,10 @@ namespace Data.Repositories
         public async Task<List<StatisticModel>> ReturnAllStatistics()
         {
             var allStatistics = new List<StatisticModel>();
-            using (var redis = ConnectionMultiplexer.Connect("localhost:6379,allowAdmin=true"))
+            using (var redis = ConnectionMultiplexer.Connect("redis_image:6379,allowAdmin=true"))
             {
                 IDatabase db = redis.GetDatabase(0);
-                var keys = redis.GetServer("localhost:6379").Keys(pattern: _patternKey, pageSize: 1000);
+                var keys = redis.GetServer("redis_image:6379").Keys(pattern: _patternKey, pageSize: 1000);
                 var keysArr = keys.Select(key => (string)key).ToArray();
                 foreach (var key in keysArr)
                 {
