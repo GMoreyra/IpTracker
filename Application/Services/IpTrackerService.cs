@@ -38,7 +38,7 @@ namespace Application.Services
 
                 var ipInfo = _mapper.Map<IpInfoModel>(ipWhoIsData);
 
-                await _memoryCache.SetRecordAsync(KeyUtils.ADDRESS + ipAddress, ipInfo, TimeSpan.FromHours(12));
+                await _memoryCache.SetRecordAsync(KeyUtils.ADDRESS + ipAddress, ipInfo);
 
                 ipInfoModel = ipInfo;
             }

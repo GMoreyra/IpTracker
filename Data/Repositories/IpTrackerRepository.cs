@@ -87,7 +87,7 @@ namespace Data.Repositories
                         DistanceToBaInKms = StringUtils.StringKmsToInt(ipInfoModel.DistanceToBA)
                     };
 
-                    await _memoryCache.SetRecordAsync(statsKey, statistic, TimeSpan.FromHours(24));
+                    await _memoryCache.SetRecordAsync(statsKey, statistic, TimeSpan.FromHours(1));
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace Data.Repositories
 
                     cached.InvocationCounter++;
 
-                    await _memoryCache.SetRecordAsync(statsKey, cached, TimeSpan.FromHours(24));
+                    await _memoryCache.SetRecordAsync(statsKey, cached, TimeSpan.FromHours(1));
                 }
             }
         }
