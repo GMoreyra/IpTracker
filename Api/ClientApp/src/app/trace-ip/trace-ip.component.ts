@@ -11,8 +11,10 @@ export class TraceIpComponent {
   private http: HttpClient;
   private baseUrl: string;
   private completeUrl: string;
+  public averageKms: string;
   public country: Country;
- 
+  public statistics: Statistic[];
+
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.http = http;
     this.baseUrl = baseUrl;
@@ -20,12 +22,35 @@ export class TraceIpComponent {
   }
 
   checkIp(ipAddress: string) {
+    this.setNull();
     if (ipAddress) {
       const url = `${this.completeUrl}/${ipAddress}`;
       this.http.get<Country>(url).subscribe(result => {
         this.country = result;
       }, error => console.error(error));
     }
+  }
+
+  checkStatistic() {
+    this.setNull();
+    const url = `${this.completeUrl}/statistic`;
+    this.http.get<Statistic[]>(url).subscribe(result => {
+      this.statistics = result;
+    }, error => console.error(error));
+  }
+
+  checkAverage() {
+    this.setNull();
+    const url = `${this.completeUrl}/average`;
+    this.http.get(url, { responseType: 'text' }).subscribe(result => {
+      this.averageKms = result.toString();
+    }, error => console.error(error));
+  }
+
+  setNull() {
+    this.country = null;
+    this.statistics = null;
+    this.averageKms = null;
   }
 }
 
@@ -35,4 +60,10 @@ interface Country {
   timezone: string;
   currency: string;
   distanceToBA: string;
+}
+
+interface Statistic {
+  countryName: string;
+  distanceToBaInKms: number;
+  InvocationCounter: number;
 }

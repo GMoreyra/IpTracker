@@ -8,12 +8,32 @@
     <button type="button" (click)="checkIp(ipAddress.value)">Check IP</button>
   </div>
 
-  <div *ngIf="country">
+  <div>
+    <button type="button" (click)="checkStatistic()">Most consulted ip</button>
+    <button type="button" (click)="checkAverage()">Average distance</button>
+  </div>
+
+  <div *ngIf="country && !statistics && !averageKms">
     <p> Country name = {{ country.country }}</p>
     <p> Country code = {{ country.isoCode }}</p>
     <p> Timezones = {{ country.timezone }}</p>
     <p> Currencies = {{ country.currency }}</p>
     <p> Distance to Buenos Aires = {{ country.distanceToBA }}</p>
+  </div>
+
+  <div *ngIf="statistics && !country && !averageKms">
+    <p> <b>Max distance</b> </p>
+    <p> Country name = {{ statistics[0].countryName }}</p>
+    <p> Distance to Buenos Aires = {{ statistics[0].distanceToBaInKms }}</p>
+    <p> Invocation Times = {{ statistics[0].invocationCounter }}</p>
+    <p> <b>Min distance</b> </p>
+    <p> Country name = {{ statistics[1].countryName }}</p>
+    <p> Distance to Buenos Aires = {{ statistics[1].distanceToBaInKms }}</p>
+    <p> Invocation Times = {{ statistics[1].invocationCounter }}</p>
+  </div>
+
+  <div *ngIf="averageKms && !statistics && !country">
+    <p> Average distance to Buenos Aires = {{ averageKms }}</p>
   </div>
 </div>
 
