@@ -13,6 +13,7 @@ IP Tracker is a web application that takes an IP address as input and returns da
     Node.js: https://nodejs.org/en/download/
     Docker: https://www.docker.com/get-started
     Redis: https://redis.io/download
+    RestSharp: https://restsharp.dev/getting-started/installation.html
 
 ## Getting Started
 
