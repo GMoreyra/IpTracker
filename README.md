@@ -1,10 +1,57 @@
-## IP Tracker - .NET Framework + Angular WebApp
+# IP Tracker - .NET Framework
 
-This project is a web application built with .NET Framework and Angular that provides information about a given IP address. It utilizes Docker for containerization and Redis for caching.
+## Interview exercise Overview
 
-## Project Overview
+This programming exercise aims to create a tool that helps coordinate response actions to fraud by using contextual information from the detected place of origin during the process of purchasing, searching, and paying. The tool should obtain associated information from an IP address.
 
-IP Tracker is a web application that takes an IP address as input and returns data about that IP. It provides endpoints for fetching IP information, retrieving statistics about the most requested IP data, and calculating the average distance to Buenos Aires based on these statistics.
+## Features
+
+1- Find the country to which the IP address belongs and display:
+* Name and ISO code of the country
+* Official languages of the country
+* Current time(s) in the country (if the country covers more than one time zone, display all)
+* Estimated distance between Buenos Aires and the country, in km
+* Local currency and its current exchange rate in dollars (if available)
+
+2- Provide a mechanism to query service usage statistics with the following aggregations:
+* Farthest distance from Buenos Aires from which the service has been queried
+* Closest distance to Buenos Aires from which the service has been queried
+* Average distance of all service executions
+
+3- Account for possible aggressive traffic fluctuations (between 100 and 1 million requests per second).
+
+4- Use the following public APIs to obtain information:
+* IP geolocation: https://ip2country.info/
+* Country information: http://restcountries.eu/
+* Currency information: http://fixer.io/
+
+5- The application can be either command-line or web-based:
+* In the first case, the IP should be a parameter
+* In the second case, there should be a form to input the address
+
+6- Make rational use of APIs, avoiding unnecessary calls.
+
+7- The application may have persistent state between invocations.
+
+8- Pay attention to the style and quality of the source code.
+
+9- The application should be able to run and be built within a Docker container (include a Dockerfile and instructions for running it).
+
+## Example
+
+    > traceip 83.44.196.93
+
+    IP: 83.44.196.93, current date: 21/11/2016 16:01:23
+    Country: Spain (Spain)
+    ISO Code: es
+    Languages: Spanish (es)
+    Currency: EUR (1 EUR = 1.0631 U$S)
+    Time: 20:01:23 (UTC) 0 21:01:23 (UTC+01:00)
+    Estimated distance: 10270 kms (-34, -64) to (40, -4)
+
+--- 
+
+# *Solution*
 
 ## Prerequisites
 
