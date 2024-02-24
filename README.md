@@ -1,4 +1,4 @@
-# IP Tracker - .NET Framework
+# IP Tracker
 
 ## Interview exercise Overview
 
