@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Data.Interfaces;
 
-public interface IIpTrackerRepository
+public interface ITrackerRepository
 {
     /// <summary>
     /// Returns the country information based on the ip address

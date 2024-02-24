@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace Application.Interfaces;
 
-public interface IIpTrackerService
+public interface ITrackerService
 {
     /// <summary>
     /// Returns the ip information based on the ip address

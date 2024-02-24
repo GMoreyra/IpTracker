@@ -9,13 +9,13 @@ using Utils;
 
 namespace Application.Services;
 
-public class IpTrackerService : IIpTrackerService
+public class TrackerService : ITrackerService
 {
-    private static IIpTrackerRepository _getWhoIsRepository;
+    private static ITrackerRepository _getWhoIsRepository;
     private static IMapper _mapper;
     private readonly IDistributedCache _memoryCache;
 
-    public IpTrackerService(IIpTrackerRepository getWhoIs, IMapper mapper, IDistributedCache memoryCache)
+    public TrackerService(ITrackerRepository getWhoIs, IMapper mapper, IDistributedCache memoryCache)
     {
         _getWhoIsRepository = getWhoIs;
         _mapper = mapper;

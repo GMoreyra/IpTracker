@@ -1,5 +1,7 @@
-﻿using Application.Interfaces;
+﻿using Api.Controllers;
+using Application.Interfaces;
 using Domain.Models;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
 using System;
@@ -7,15 +9,15 @@ using Xunit;
 
 namespace Tests;
 
-public class IpTrackerControllerTests
+public class TrackerControllerTests
 {
-    private Mock<IIpTrackerService> _mockService;
-    private IpTrackerController _controller;
+    private Mock<ITrackerService> _mockService;
+    private TrackerController _controller;
 
     private void Init_Test()
     {
-        _mockService = new Mock<IIpTrackerService>();
-        _controller = new IpTrackerController(_mockService.Object);
+        _mockService = new Mock<ITrackerService>();
+        _controller = new TrackerController(_mockService.Object);
         _mockService.Setup(p => p.GetIpInfo(It.IsAny<string>())).ReturnsAsync(new IpInfoModel());
     }
 

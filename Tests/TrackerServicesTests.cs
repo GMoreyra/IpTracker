@@ -14,10 +14,10 @@ using Data.Interfaces;
 
 namespace Tests;
 
-public class IpTrackerServicesTests
+public class TrackerServicesTests
 {
-    private Mock<IIpTrackerRepository> _mockRepo;
-    private IIpTrackerService _service;
+    private Mock<ITrackerRepository> _mockRepo;
+    private ITrackerService _service;
     private Mock<IDistributedCache> _distributedCache;
 
     private void Init_Test()
@@ -28,8 +28,8 @@ public class IpTrackerServicesTests
         }).CreateMapper();
 
         _distributedCache = new Mock<IDistributedCache>();
-        _mockRepo = new Mock<IIpTrackerRepository>();
-        _service = new IpTrackerService(_mockRepo.Object, mapper, _distributedCache.Object);
+        _mockRepo = new Mock<ITrackerRepository>();
+        _service = new TrackerService(_mockRepo.Object, mapper, _distributedCache.Object);
         _mockRepo.Setup(p => p.ReturnCountryInfo(It.IsAny<string>())).ReturnsAsync(new IpToLocationModel());
         _mockRepo.Setup(p => p.ReturnMoneyInfo(It.IsAny<List<string>>())).ReturnsAsync(new List<string>());
     }

@@ -10,16 +10,16 @@ using Data.Interfaces;
 
 namespace Tests;
 
-public class IpTrackerRepositoryTests
+public class TrackerRepositoryTests
 {
     private Mock<IDistributedCache> _distributedCache;
-    private IIpTrackerRepository _repo;
+    private ITrackerRepository _repo;
     private List<StatisticModel> _statisticsList;
 
     private void Init_Test()
     {
         _distributedCache = new Mock<IDistributedCache>();
-        _repo = new IpTrackerRepository(_distributedCache.Object);
+        _repo = new TrackerRepository(_distributedCache.Object);
         _statisticsList = new List<StatisticModel>()
         {
             new StatisticModel

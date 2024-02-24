@@ -12,7 +12,7 @@ using Utils;
 
 namespace Data.Repositories;
 
-public class IpTrackerRepository : IIpTrackerRepository
+public class TrackerRepository : ITrackerRepository
 {
     private static readonly string _apiKey = "z6MKj5YtvvtUnORpxxvASLIUvzfeo4Aq";
     private static readonly string _urlIpToLocation = "https://api.apilayer.com/ip_to_location/";
@@ -22,7 +22,7 @@ public class IpTrackerRepository : IIpTrackerRepository
 
     private readonly IDistributedCache _memoryCache;
 
-    public IpTrackerRepository(IDistributedCache memoryCache)
+    public TrackerRepository(IDistributedCache memoryCache)
     {
         _memoryCache = memoryCache;
     }

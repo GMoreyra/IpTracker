@@ -14,16 +14,16 @@ namespace Api.Controllers;
 [Route("[controller]")]
 [Produces(Media.Application.Json)]
 [Consumes(Media.Application.Json)]
-public class IpTrackerController : ControllerBase
+public class TrackerController : ControllerBase
 {
-    private readonly IIpTrackerService _service;
+    private readonly ITrackerService _service;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="IpTrackerController"/> class.
+    /// Initializes a new instance of the <see cref="TrackerController"/> class.
     /// </summary>
     /// <param name="service">The service to be used for IP tracking.</param>
     /// <exception cref="ArgumentNullException">Thrown when the provided service is null.</exception>
-    public IpTrackerController(IIpTrackerService service)
+    public TrackerController(ITrackerService service)
     {
         _service = service ?? throw new ArgumentNullException(nameof(service));
     }

@@ -19,8 +19,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = KeyUtils.APP;
 });
 
-builder.Services.AddScoped<IIpTrackerService, IpTrackerService>();
-builder.Services.AddScoped<IIpTrackerRepository, IpTrackerRepository>();
+builder.Services.AddScoped<ITrackerService, TrackerService>();
+builder.Services.AddScoped<ITrackerRepository, TrackerRepository>();
 
 var mapperConfig = new MapperConfiguration(m =>
 {
