@@ -8,19 +8,19 @@ namespace Tests;
 
 public class TimeUtilsTests
 {
-    private readonly List<string> _utcTimeList = new()
-    {
+    private readonly List<string> _utcTimeList =
+    [
         "UTC-12:00",
         "UTC + 12:00",
         "UTC + 12:00",
         "UTC + 00:00",
         "UTC"
-    };
+    ];
 
     [Fact]
     public void TimeToUTC_Should_Return_Empty_Dictionary()
     {
-        var result = TimeUtils.TimeToUTCDictionary(new List<string>());
+        var result = TimeUtils.TimeToUTCDictionary([]);
 
         result.Count.ShouldBe(0);
     }

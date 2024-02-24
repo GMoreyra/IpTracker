@@ -1,23 +1,22 @@
 ﻿using Application.Services;
 using AutoMapper;
+using Data.Interfaces;
 using Domain.Models;
 using Mapping.Profiles;
+using Microsoft.Extensions.Caching.Distributed;
 using Moq;
+using Shouldly;
 using System;
 using System.Collections.Generic;
-using Xunit;
-using Shouldly;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Caching.Distributed;
-using Application.Interfaces;
-using Data.Interfaces;
+using Xunit;
 
 namespace Tests;
 
 public class TrackerServicesTests
 {
     private Mock<ITrackerRepository> _mockRepo;
-    private ITrackerService _service;
+    private TrackerService _service;
     private Mock<IDistributedCache> _distributedCache;
 
     private void Init_Test()
@@ -31,7 +30,7 @@ public class TrackerServicesTests
         _mockRepo = new Mock<ITrackerRepository>();
         _service = new TrackerService(_mockRepo.Object, mapper, _distributedCache.Object);
         _mockRepo.Setup(p => p.ReturnCountryInfo(It.IsAny<string>())).ReturnsAsync(new IpToLocationModel());
-        _mockRepo.Setup(p => p.ReturnMoneyInfo(It.IsAny<List<string>>())).ReturnsAsync(new List<string>());
+        _mockRepo.Setup(p => p.ReturnMoneyInfo(It.IsAny<List<string>>())).ReturnsAsync([]);
     }
 
     [Fact]

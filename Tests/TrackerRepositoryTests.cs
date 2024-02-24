@@ -13,52 +13,46 @@ namespace Tests;
 public class TrackerRepositoryTests
 {
     private Mock<IDistributedCache> _distributedCache;
-    private ITrackerRepository _repo;
+    private TrackerRepository _repo;
     private List<StatisticModel> _statisticsList;
 
     private void Init_Test()
     {
         _distributedCache = new Mock<IDistributedCache>();
         _repo = new TrackerRepository(_distributedCache.Object);
-        _statisticsList = new List<StatisticModel>()
-        {
-            new StatisticModel
-            {
+        _statisticsList =
+        [
+            new() {
                 CountryName = "Argentina",
                 DistanceToBaInKms = 100,
                 InvocationCounter = 2
             },
-            new StatisticModel
-            {
+            new() {
                 CountryName = "Colombia",
                 DistanceToBaInKms = 50,
                 InvocationCounter = 1
             },
-            new StatisticModel
-            {
+            new() {
                 CountryName = "Peru",
                 DistanceToBaInKms = 10,
                 InvocationCounter = 3
             },
-            new StatisticModel
-            {
+            new() {
                 CountryName = "Canada",
                 DistanceToBaInKms = 1001,
                 InvocationCounter = 3
             },
-            new StatisticModel
-            {
+            new() {
                 CountryName = "Bolivia",
                 DistanceToBaInKms = 1001,
                 InvocationCounter = 5
             },
-            new StatisticModel
-            {
+            new() {
                 CountryName = "Paraguay",
                 DistanceToBaInKms = 1001,
                 InvocationCounter = 4
             }
-        };
+        ];
     }
 
     [Fact]
@@ -89,7 +83,7 @@ public class TrackerRepositoryTests
     public void ReturnMaxMinStatistics_Should_Return_Empty_List()
     {
         Init_Test();
-        var result = _repo.ReturnMaxMinStatistics(new List<StatisticModel>());
+        var result = _repo.ReturnMaxMinStatistics([]);
         result.Count.ShouldBe(0);
     }
 }

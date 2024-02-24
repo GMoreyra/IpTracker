@@ -11,23 +11,23 @@ static public class IpToLocationMock
         {
             Country_name = "Argentina",
             Country_code = "ARG",
-            Currencies = new List<IpToLocationModel.CurrencyModel>()
-            {
-                new IpToLocationModel.CurrencyModel()
+            Currencies =
+            [
+                new()
                 {
                     Code = "ARS"
                 }
-            },
-            CurrenciesDollarValue = new List<string>()
-            {
+            ],
+            CurrenciesDollarValue =
+            [
                 "200"
-            },
+            ],
             Latitude = "-34",
             Longitude = "-58",
-            Timezones = new List<string>()
-            {
+            Timezones =
+            [
                 "UTC-3", "UTC-2", "UTC"
-            }
+            ]
         };
     }
 }
