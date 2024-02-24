@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Utils;
 using System.Threading;
+using Data.Interfaces;
 
 namespace Tests
 {

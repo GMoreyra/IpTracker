@@ -1,6 +1,5 @@
 ﻿using Application.Services;
 using AutoMapper;
-using Data.Repositories;
 using Domain.Models;
 using Mapping.Profiles;
 using Moq;
@@ -12,6 +11,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
 using Utils;
 using System.Threading;
+using Application.Interfaces;
+using Data.Interfaces;
 
 namespace Tests
 {

@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Data.Interfaces;
+using Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using RestSharp;
