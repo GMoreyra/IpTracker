@@ -1,29 +1,28 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Utils
+namespace Utils;
+
+static public class StringUtils
 {
-    static public class StringUtils
+    static public bool ValidateString(string input)
     {
-        static public bool ValidateString(string input)
+        if (string.IsNullOrEmpty(input))
         {
-            if (string.IsNullOrEmpty(input))
-            {
-                return false;
-            }
-
-            var rx = new Regex(@"^\d+(\.\d+)*$");
-            return rx.IsMatch(input);
+            return false;
         }
 
-        static public int StringKmsToInt(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return 0;
-            }
+        var rx = new Regex(@"^\d+(\.\d+)*$");
+        return rx.IsMatch(input);
+    }
 
-            string result = input?.ToUpper()?.Replace(" KMS", "");
-            return int.Parse(result);
+    static public int StringKmsToInt(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return 0;
         }
+
+        string result = input?.ToUpper()?.Replace(" KMS", "");
+        return int.Parse(result);
     }
 }

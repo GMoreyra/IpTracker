@@ -1,7 +1,6 @@
-﻿namespace Domain.Models
+﻿namespace Domain.Models;
+
+public class FixerModel
 {
-    public class FixerModel
-    {
-        public string Result { get; set; }
-    }
+    public string Result { get; set; }
 }

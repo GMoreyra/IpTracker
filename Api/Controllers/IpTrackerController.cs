@@ -1,81 +1,78 @@
 ﻿using Application.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 using Utils;
 
-namespace Api.Controllers
+namespace Api.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class IpTrackerController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class IpTrackerController : ControllerBase
+    private readonly IIpTrackerService _service;
+
+    public IpTrackerController(IIpTrackerService service)
     {
-        private readonly IIpTrackerService _service;
+        _service = service;
+    }
 
-        public IpTrackerController(IIpTrackerService service)
+    /// <summary>
+    /// Returns the ip info based on the ip address
+    /// </summary>
+    /// <param name="ipAddress">ip address</param>
+    /// <returns></returns>
+    [HttpGet("{ipAddress}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetGeolocationAsync(string ipAddress)
+    {
+        if (!StringUtils.ValidateString(ipAddress))
         {
-            _service = service;
+            return BadRequest();
         }
 
-        /// <summary>
-        /// Returns the ip info based on the ip address
-        /// </summary>
-        /// <param name="ipAddress">ip address</param>
-        /// <returns></returns>
-        [HttpGet("{ipAddress}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetGeolocationAsync(string ipAddress)
+        var response = await _service.GetIpInfo(ipAddress);
+
+        if (response is null)
         {
-            if (!StringUtils.ValidateString(ipAddress))
-            {
-                return BadRequest();
-            }
-
-            var response = await _service.GetIpInfo(ipAddress);
-
-            if (response is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(response);
+            return NotFound();
         }
 
-        /// <summary>
-        /// Returns the statistics
-        /// </summary>
-        [HttpGet("statistic")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetStatisticsAsync()
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Returns the statistics
+    /// </summary>
+    [HttpGet("statistic")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetStatisticsAsync()
+    {
+        var response = await _service.GetStatistics();
+
+        if (response is null)
         {
-            var response = await _service.GetStatistics();
-
-            if (response is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(response);
+            return NotFound();
         }
 
-        /// <summary>
-        /// Returns the average distance
-        /// </summary>
-        [HttpGet("average")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetAverageDistanceAsync()
+        return Ok(response);
+    }
+
+    /// <summary>
+    /// Returns the average distance
+    /// </summary>
+    [HttpGet("average")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAverageDistanceAsync()
+    {
+        var response = await _service.GetAverageDistance();
+
+        if (response is null)
         {
-            var response = await _service.GetAverageDistance();
-
-            if (response is null)
-            {
-                return NotFound();
-            }
-
-            return Ok(response);
+            return NotFound();
         }
+
+        return Ok(response);
     }
 }

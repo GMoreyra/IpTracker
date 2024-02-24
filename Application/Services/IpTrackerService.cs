@@ -8,70 +8,69 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Utils;
 
-namespace Application.Services
+namespace Application.Services;
+
+public class IpTrackerService : IIpTrackerService
 {
-    public class IpTrackerService : IIpTrackerService
+    private static IIpTrackerRepository _getWhoIsRepository;
+    private static IMapper _mapper;
+    private readonly IDistributedCache _memoryCache;
+
+    public IpTrackerService(IIpTrackerRepository getWhoIs, IMapper mapper, IDistributedCache memoryCache)
     {
-        private static IIpTrackerRepository _getWhoIsRepository;
-        private static IMapper _mapper;
-        private readonly IDistributedCache _memoryCache;
+        _getWhoIsRepository = getWhoIs;
+        _mapper = mapper;
+        _memoryCache = memoryCache;
+    }
 
-        public IpTrackerService(IIpTrackerRepository getWhoIs, IMapper mapper, IDistributedCache memoryCache)
+    public async Task<IpInfoModel> GetIpInfo(string ipAddress)
+    {
+        IpInfoModel ipInfoModel;
+        var recordKey = KeyUtils.ADDRESS + ipAddress;
+        var cached = await _memoryCache.GetRecordAsync<IpInfoModel>(recordKey);
+
+        if (cached is null)
         {
-            _getWhoIsRepository = getWhoIs;
-            _mapper = mapper;
-            _memoryCache = memoryCache;
+            var ipWhoIsData = await _getWhoIsRepository.ReturnCountryInfo(ipAddress);
+
+            var currencyList = ipWhoIsData.GetCurrenciesList();
+
+            ipWhoIsData.CurrenciesDollarValue = await _getWhoIsRepository.ReturnMoneyInfo(currencyList);
+
+            var ipInfo = _mapper.Map<IpInfoModel>(ipWhoIsData);
+
+            await _memoryCache.SetRecordAsync(KeyUtils.ADDRESS + ipAddress, ipInfo);
+
+            ipInfoModel = ipInfo;
+        }
+        else
+        {
+            ipInfoModel = cached;
         }
 
-        public async Task<IpInfoModel> GetIpInfo(string ipAddress)
-        {
-            IpInfoModel ipInfoModel;
-            var recordKey = KeyUtils.ADDRESS + ipAddress;
-            var cached = await _memoryCache.GetRecordAsync<IpInfoModel>(recordKey);
+        SetStatistic(ipInfoModel);
 
-            if (cached is null)
-            {
-                var ipWhoIsData = await _getWhoIsRepository.ReturnCountryInfo(ipAddress);
+        return ipInfoModel;
+    }
 
-                var currencyList = ipWhoIsData.GetCurrenciesList();
+    private void SetStatistic(IpInfoModel ipInfoModel)
+    {
+        _getWhoIsRepository.AddStatistic(ipInfoModel);
+    }
 
-                ipWhoIsData.CurrenciesDollarValue = await _getWhoIsRepository.ReturnMoneyInfo(currencyList);
+    public async Task<List<StatisticModel>> GetStatistics()
+    {
+        var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
 
-                var ipInfo = _mapper.Map<IpInfoModel>(ipWhoIsData);
+        return _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
+    }
 
-                await _memoryCache.SetRecordAsync(KeyUtils.ADDRESS + ipAddress, ipInfo);
+    public async Task<string> GetAverageDistance()
+    {
+        var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
 
-                ipInfoModel = ipInfo;
-            }
-            else
-            {
-                ipInfoModel = cached;
-            }
+        var maxMinStatistics = _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
 
-            SetStatistic(ipInfoModel);
-
-            return ipInfoModel;
-        }
-
-        private void SetStatistic(IpInfoModel ipInfoModel)
-        {
-            _getWhoIsRepository.AddStatistic(ipInfoModel);
-        }
-
-        public async Task<List<StatisticModel>> GetStatistics()
-        {
-            var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
-
-            return _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
-        }
-
-        public async Task<string> GetAverageDistance()
-        {
-            var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
-
-            var maxMinStatistics = _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
-
-            return _getWhoIsRepository.ReturnAverageDistanceStatistics(maxMinStatistics);
-        }
+        return _getWhoIsRepository.ReturnAverageDistanceStatistics(maxMinStatistics);
     }
 }

@@ -14,42 +14,41 @@ using System.Threading;
 using Application.Interfaces;
 using Data.Interfaces;
 
-namespace Tests
+namespace Tests;
+
+public class IpTrackerServicesTests
 {
-    public class IpTrackerServicesTests
+    private Mock<IIpTrackerRepository> _mockRepo;
+    private IIpTrackerService _service;
+    private Mock<IDistributedCache> _distributedCache;
+
+    private void Init_Test()
     {
-        private Mock<IIpTrackerRepository> _mockRepo;
-        private IIpTrackerService _service;
-        private Mock<IDistributedCache> _distributedCache;
-
-        private void Init_Test()
+        var mapper = new MapperConfiguration(m =>
         {
-            var mapper = new MapperConfiguration(m =>
-            {
-                m.AddProfile(new IpLocationToIpInfoProfile());
-            }).CreateMapper();
+            m.AddProfile(new IpLocationToIpInfoProfile());
+        }).CreateMapper();
 
-            _distributedCache = new Mock<IDistributedCache>();
-            _mockRepo = new Mock<IIpTrackerRepository>();
-            _service = new IpTrackerService(_mockRepo.Object, mapper, _distributedCache.Object);
-            _mockRepo.Setup(p => p.ReturnCountryInfo(It.IsAny<string>())).ReturnsAsync(new IpToLocationModel());
-            _mockRepo.Setup(p => p.ReturnMoneyInfo(It.IsAny<List<string>>())).ReturnsAsync(new List<string>());
-        }
+        _distributedCache = new Mock<IDistributedCache>();
+        _mockRepo = new Mock<IIpTrackerRepository>();
+        _service = new IpTrackerService(_mockRepo.Object, mapper, _distributedCache.Object);
+        _mockRepo.Setup(p => p.ReturnCountryInfo(It.IsAny<string>())).ReturnsAsync(new IpToLocationModel());
+        _mockRepo.Setup(p => p.ReturnMoneyInfo(It.IsAny<List<string>>())).ReturnsAsync(new List<string>());
+    }
 
-        [Fact]
-        public void Should_Not_Throw()
-        {
-            Action act = () => Init_Test();
-            act.ShouldNotThrow();
-        }
+    [Fact]
+    public void Should_Not_Throw()
+    {
+        Action act = () => Init_Test();
+        act.ShouldNotThrow();
+    }
 
-        [Fact]
-        public async Task GetIpInfo_Should_Return_IpInfo()
-        {
-            Init_Test();
-            var result = await _service.GetIpInfo("1.0.0");
+    [Fact]
+    public async Task GetIpInfo_Should_Return_IpInfo()
+    {
+        Init_Test();
+        var result = await _service.GetIpInfo("1.0.0");
 
-            result.ShouldBeOfType<IpInfoModel>();
-        }
+        result.ShouldBeOfType<IpInfoModel>();
     }
 }
