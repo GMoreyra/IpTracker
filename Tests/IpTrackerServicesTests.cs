@@ -9,8 +9,6 @@ using Xunit;
 using Shouldly;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
-using Utils;
-using System.Threading;
 using Application.Interfaces;
 using Data.Interfaces;
 

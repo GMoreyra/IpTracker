@@ -1,7 +1,5 @@
-﻿using Api.Controllers;
-using Application.Interfaces;
+﻿using Application.Interfaces;
 using Domain.Models;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Shouldly;
 using System;

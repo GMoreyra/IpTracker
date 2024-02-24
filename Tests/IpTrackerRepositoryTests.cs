@@ -1,17 +1,11 @@
-﻿using Application.Services;
-using AutoMapper;
-using Data.Repositories;
+﻿using Data.Repositories;
 using Domain.Models;
-using Mapping.Profiles;
 using Moq;
 using System;
 using System.Collections.Generic;
 using Xunit;
 using Shouldly;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Distributed;
-using Utils;
-using System.Threading;
 using Data.Interfaces;
 
 namespace Tests;
