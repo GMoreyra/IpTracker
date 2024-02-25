@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Data.Interfaces;
+using Data.Mappers;
 using Data.Repositories;
-using Mapping.Profiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Utils;
 
 namespace Data.Initializer;
 
-public static class ApplicationInitializer
+public static class DataInitializer
 {
     public static IServiceCollection ConfigureApplication(this IServiceCollection services, IConfiguration configuration)
     {

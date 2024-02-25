@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Models;
 
-namespace Mapping.Profiles;
+namespace Data.Mappers;
 
 public class IpLocationToIpInfoProfile : Profile
 {
