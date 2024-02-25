@@ -1,8 +1,8 @@
 ﻿using Application.Services;
 using AutoMapper;
 using Data.Interfaces;
+using Data.Mappers;
 using Domain.Models;
-using Mapping.Profiles;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using Shouldly;

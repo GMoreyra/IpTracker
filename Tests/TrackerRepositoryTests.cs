@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using Xunit;
 using Shouldly;
 using Microsoft.Extensions.Caching.Distributed;
-using Data.Interfaces;
 
 namespace Tests;
 
