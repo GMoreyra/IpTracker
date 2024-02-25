@@ -1,38 +1,16 @@
-using Application.Interfaces;
-using Application.Services;
-using AutoMapper;
-using Data.Interfaces;
-using Data.Repositories;
-using Mapping.Profiles;
-using Utils;
+using Application.Initializer;
+using Data.Initializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddServices();
+builder.Services.ConfigureApplication(builder.Configuration);
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration = builder.Configuration.GetConnectionString("Redis");
-    options.InstanceName = KeyUtils.APP;
-});
-
-builder.Services.AddScoped<ITrackerService, TrackerService>();
-builder.Services.AddScoped<ITrackerRepository, TrackerRepository>();
-
-var mapperConfig = new MapperConfiguration(m =>
-{
-    m.AddProfile(new IpLocationToIpInfoProfile());
-});
-
-IMapper mapper = mapperConfig.CreateMapper();
-builder.Services.AddSingleton(mapper);
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
