@@ -4,6 +4,9 @@ using Domain.Models;
 
 namespace Application.Interfaces;
 
+/// <summary>
+/// Interface for the Tracker service.
+/// </summary>
 public interface ITrackerService
 {
     /// <summary>

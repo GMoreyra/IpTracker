@@ -3,6 +3,7 @@ using AutoMapper;
 using Data.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Utils;
@@ -11,15 +12,15 @@ namespace Application.Services;
 
 public class TrackerService : ITrackerService
 {
-    private static ITrackerRepository _getWhoIsRepository;
-    private static IMapper _mapper;
+    private readonly ITrackerRepository _trackerRepository;
+    private readonly IMapper _mapper;
     private readonly IDistributedCache _memoryCache;
 
-    public TrackerService(ITrackerRepository getWhoIs, IMapper mapper, IDistributedCache memoryCache)
+    public TrackerService(ITrackerRepository trackerRepository, IMapper mapper, IDistributedCache memoryCache)
     {
-        _getWhoIsRepository = getWhoIs;
-        _mapper = mapper;
-        _memoryCache = memoryCache;
+        _trackerRepository = trackerRepository ?? throw new ArgumentNullException(nameof(trackerRepository));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
     }
 
     public async Task<IpInfoModel> GetIpInfo(string ipAddress)
@@ -30,11 +31,11 @@ public class TrackerService : ITrackerService
 
         if (cached is null)
         {
-            var ipWhoIsData = await _getWhoIsRepository.ReturnCountryInfo(ipAddress);
+            var ipWhoIsData = await _trackerRepository.ReturnCountryInfo(ipAddress);
 
             var currencyList = ipWhoIsData.GetCurrenciesList();
 
-            ipWhoIsData.CurrenciesDollarValue = await _getWhoIsRepository.ReturnMoneyInfo(currencyList);
+            ipWhoIsData.CurrenciesDollarValue = await _trackerRepository.ReturnMoneyInfo(currencyList);
 
             var ipInfo = _mapper.Map<IpInfoModel>(ipWhoIsData);
 
@@ -54,22 +55,22 @@ public class TrackerService : ITrackerService
 
     private void SetStatistic(IpInfoModel ipInfoModel)
     {
-        _getWhoIsRepository.AddStatistic(ipInfoModel);
+        _trackerRepository.AddStatistic(ipInfoModel);
     }
 
     public async Task<List<StatisticModel>> GetStatistics()
     {
-        var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
+        var allStatistics = await _trackerRepository.ReturnAllStatistics();
 
-        return _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
+        return _trackerRepository.ReturnMaxMinStatistics(allStatistics);
     }
 
     public async Task<string> GetAverageDistance()
     {
-        var allStatistics = await _getWhoIsRepository.ReturnAllStatistics();
+        var allStatistics = await _trackerRepository.ReturnAllStatistics();
 
-        var maxMinStatistics = _getWhoIsRepository.ReturnMaxMinStatistics(allStatistics);
+        var maxMinStatistics = _trackerRepository.ReturnMaxMinStatistics(allStatistics);
 
-        return _getWhoIsRepository.ReturnAverageDistanceStatistics(maxMinStatistics);
+        return _trackerRepository.ReturnAverageDistanceStatistics(maxMinStatistics);
     }
 }

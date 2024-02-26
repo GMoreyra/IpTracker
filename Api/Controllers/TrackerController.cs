@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Api.Contracts;
+using Application.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Utils;
@@ -34,10 +35,10 @@ public class TrackerController : ControllerBase
     /// <param name="ipAddress">The IP address to get the geolocation for.</param>
     /// <returns>A task that represents the asynchronous operation. The task result contains the action result.</returns>
     [HttpGet("{ipAddress}")]
-    [ProducesResponseType(typeof(List<StatisticModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GetGeolocationResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<IpInfoModel>> GetGeolocationAsync(string ipAddress)
+    public async Task<ActionResult<GetGeolocationResponse>> GetGeolocation(string ipAddress)
     {
         if (!StringUtils.ValidateString(ipAddress))
         {
@@ -56,7 +57,7 @@ public class TrackerController : ControllerBase
     [HttpGet("statistic")]
     [ProducesResponseType(typeof(List<StatisticModel>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<List<StatisticModel>>> GetStatisticsAsync()
+    public async Task<ActionResult<List<StatisticModel>>> GetStatistics()
     {
         var response = await _service.GetStatistics();
 
@@ -70,7 +71,7 @@ public class TrackerController : ControllerBase
     [HttpGet("average")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetAverageDistanceAsync()
+    public async Task<IActionResult> GetAverageDistance()
     {
         var response = await _service.GetAverageDistance();
 
