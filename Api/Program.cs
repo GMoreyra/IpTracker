@@ -1,10 +1,10 @@
-using Application.Initializer;
-using Data.Initializer;
+using Application.Initialization;
+using Data.Initialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddServices();
-builder.Services.ConfigureApplication(builder.Configuration);
+builder.Services.RegisterServices();
+builder.Services.RegisterApplication(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

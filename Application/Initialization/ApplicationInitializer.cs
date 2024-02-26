@@ -2,11 +2,11 @@
 using Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application.Initializer;
+namespace Application.Initialization;
 
 public static class ApplicationInitializer
 {
-    public static IServiceCollection AddServices(this IServiceCollection services)
+    public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
         services.AddScoped<ITrackerService, TrackerService>();
 

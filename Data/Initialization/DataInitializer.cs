@@ -6,11 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Utils;
 
-namespace Data.Initializer;
+namespace Data.Initialization;
 
 public static class DataInitializer
 {
-    public static IServiceCollection ConfigureApplication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterApplication(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddRespositories();
         services.AddMapper();
