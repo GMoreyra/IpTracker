@@ -10,11 +10,12 @@ namespace Data.Initialization;
 
 public static class DataInitializer
 {
-    public static IServiceCollection RegisterApplication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterData(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddRespositories();
-        services.AddMapper();
-        services.AddRedis(configuration);
+        services
+            .AddRespositories()
+            .AddMapper()
+            .AddRedis(configuration);
 
         return services;
     }
