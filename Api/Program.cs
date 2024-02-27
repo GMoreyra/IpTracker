@@ -1,9 +1,13 @@
 using Application.Initialization;
+using Application.Options;
 using Data.Initialization;
-
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.RegisterApplication();
+//TODO: Improve this configuration
+var positionOptions = builder.Configuration.GetSection(ExternalServiceOptions.ExternalServiceSectionName)
+                                           .Get<ExternalServiceOptions>();
+
+builder.Services.RegisterApplication(positionOptions);
 builder.Services.RegisterData(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
