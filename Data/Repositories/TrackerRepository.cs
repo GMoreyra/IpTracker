@@ -1,7 +1,8 @@
-﻿using Data.Interfaces;
+﻿using Application.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
+using NRedisStack;
 using RestSharp;
 using StackExchange.Redis;
 using System;
@@ -73,8 +74,8 @@ public class TrackerRepository : ITrackerRepository
 
     public async void AddStatistic(IpInfoModel ipInfoModel)
     {
-        if (ipInfoModel is not null 
-            && !string.IsNullOrWhiteSpace(ipInfoModel.DistanceToBA) 
+        if (ipInfoModel is not null
+            && !string.IsNullOrWhiteSpace(ipInfoModel.DistanceToBA)
             && !string.IsNullOrWhiteSpace(ipInfoModel.Country))
         {
             var statsKey = GetStatiscticKey(ipInfoModel);
@@ -114,18 +115,27 @@ public class TrackerRepository : ITrackerRepository
     public async Task<List<StatisticModel>> ReturnAllStatistics()
     {
         var allStatistics = new List<StatisticModel>();
-        using (var redis = ConnectionMultiplexer.Connect("redis_image:6379,allowAdmin=true"))
-        {
-            IDatabase db = redis.GetDatabase(0);
-            var keys = redis.GetServer("redis_image:6379").Keys(pattern: _patternKey, pageSize: 1000);
-            var keysArr = keys.Select(key => (string)key).ToArray();
-            foreach (var key in keysArr)
-            {
-                var statsKey = key.Replace(KeyUtils.APP, "");
-                var result = await _memoryCache.GetRecordAsync<StatisticModel>(statsKey);
+        await using var redis = ConnectionMultiplexer.Connect("localhost");
+        IDatabase db = redis.GetDatabase();
 
-                allStatistics.Add(result);
-            }
+        StatisticModel statistics = new() { CountryName = "Argentina", DistanceToBaInKms = 100 };
+        var text = System.Text.Json.JsonSerializer.Serialize(statistics);
+
+        var value = db.StringGet(_patternKey + "123.123.123");
+
+        if (!value.HasValue)
+        {
+            bool status = db.StringSet(_patternKey + "123.123.123", text);
+        }
+
+        var keys = redis.GetServer("redis_image:6379").Keys(pattern: _patternKey, pageSize: 1000);
+        var keysArr = keys.Select(key => (string)key).ToArray();
+        foreach (var key in keysArr)
+        {
+            var statsKey = key.Replace(KeyUtils.APP, "");
+            var result = await _memoryCache.GetRecordAsync<StatisticModel>(statsKey);
+
+            allStatistics.Add(result);
         }
 
         return allStatistics;
@@ -181,7 +191,7 @@ public class TrackerRepository : ITrackerRepository
         {
             distanceValue = statisticModels.Min(d => d.DistanceToBaInKms);
         }
-        
+
         var invocationValue = statisticModels.Where(x => x.DistanceToBaInKms == distanceValue).Max(x => x.InvocationCounter);
         var statisticModel = statisticModels.Where(x => x.DistanceToBaInKms == distanceValue && x.InvocationCounter == invocationValue).First();
 

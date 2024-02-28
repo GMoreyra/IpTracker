@@ -1,6 +1,6 @@
-﻿using Application.Services;
+﻿using Application.Interfaces;
+using Application.Services;
 using AutoMapper;
-using Data.Interfaces;
 using Data.Mappers;
 using Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;

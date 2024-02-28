@@ -1,6 +1,5 @@
 ﻿using Application.Interfaces;
 using AutoMapper;
-using Data.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using System;

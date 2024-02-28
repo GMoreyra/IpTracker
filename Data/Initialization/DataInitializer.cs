@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using Data.Interfaces;
+﻿using Application.Interfaces;
+using AutoMapper;
 using Data.Mappers;
 using Data.Repositories;
 using Microsoft.Extensions.Configuration;
