@@ -2,10 +2,11 @@
 
 using Application.ExternalServiceClients.Geolocation;
 using Application.ExternalServiceClients.Geolocation.Models;
+using Data.Gateways.Geolocation.Interface;
 using System;
 using System.Threading.Tasks;
 
-public class GeolocationGateway
+public class GeolocationGateway : IGeolocationGateway
 {
     private readonly IGeoLocationClient _geolocationClient;
 

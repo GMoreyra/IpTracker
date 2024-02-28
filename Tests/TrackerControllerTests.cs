@@ -18,7 +18,7 @@ public class TrackerControllerTests
     {
         _mockService = new Mock<ITrackerService>();
         _controller = new TrackerController(_mockService.Object);
-        _mockService.Setup(p => p.GetIpInfo(It.IsAny<string>())).ReturnsAsync(new IpInfoModel());
+        _mockService.Setup(p => p.GetIpInformation(It.IsAny<string>())).ReturnsAsync(new IpInfoModel());
     }
 
     [Fact]
@@ -62,7 +62,7 @@ public class TrackerControllerTests
     {
         // Arrange
         Init_Test();
-        _mockService.Setup(p => p.GetIpInfo(It.IsAny<string>())).ReturnsAsync(() => null);
+        _mockService.Setup(p => p.GetIpInformation(It.IsAny<string>())).ReturnsAsync(() => null);
 
         // Act
         var result = await _controller.GetGeolocation("1.0.0");

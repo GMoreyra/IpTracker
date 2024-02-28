@@ -2,10 +2,11 @@
 
 using Application.ExternalServiceClients.CurrencyInfo;
 using Application.ExternalServiceClients.CurrencyInfo.Models;
+using Data.Gateways.CurrencyInfo.Interface;
 using System;
 using System.Threading.Tasks;
 
-public class CurrencyInfoGateway
+public class CurrencyInfoGateway : ICurrencyInfoGateway
 {
     private readonly ICurrencyInformationClient _currencyInformationClient;
 

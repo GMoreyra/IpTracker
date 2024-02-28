@@ -2,11 +2,12 @@
 
 using Application.ExternalServiceClients.CountryInfo;
 using Application.ExternalServiceClients.CountryInfo.Models;
+using Data.Gateways.CountryInfo.Interface;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-public class CountryInfoGateway
+public class CountryInfoGateway : ICountryInfoGateway
 {
     private readonly ICountryInformationClient _countryInformationClient;
 

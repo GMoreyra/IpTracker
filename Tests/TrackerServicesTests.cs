@@ -44,7 +44,7 @@ public class TrackerServicesTests
     public async Task GetIpInfo_Should_Return_IpInfo()
     {
         Init_Test();
-        var result = await _service.GetIpInfo("1.0.0");
+        var result = await _service.GetIpInformation("1.0.0");
 
         result.ShouldBeOfType<IpInfoModel>();
     }

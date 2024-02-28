@@ -1,5 +1,11 @@
 ﻿using Application.Interfaces.Repositories;
 using AutoMapper;
+using Data.Gateways.CountryInfo;
+using Data.Gateways.CountryInfo.Interface;
+using Data.Gateways.CurrencyInfo;
+using Data.Gateways.CurrencyInfo.Interface;
+using Data.Gateways.Geolocation;
+using Data.Gateways.Geolocation.Interface;
 using Data.Mappers;
 using Data.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +20,7 @@ public static class DataInitializer
     {
         services
             .AddRespositories()
+            .AddGateways()
             .AddMapper()
             .AddRedis(configuration);
 
@@ -23,6 +30,15 @@ public static class DataInitializer
     private static IServiceCollection AddRespositories(this IServiceCollection services)
     {
         services.AddScoped<ITrackerRepository, TrackerRepository>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddGateways(this IServiceCollection services)
+    {
+        services.AddScoped<ICountryInfoGateway, CountryInfoGateway>();
+        services.AddScoped<ICurrencyInfoGateway, CurrencyInfoGateway>();
+        services.AddScoped<IGeolocationGateway, GeolocationGateway>();
 
         return services;
     }
