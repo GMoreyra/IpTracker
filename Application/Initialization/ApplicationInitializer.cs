@@ -1,19 +1,26 @@
-﻿using Application.ExternalServiceClients.CountryInfo;
+﻿namespace Application.Initialization;
+
+using Application.ExternalServiceClients.CountryInfo;
 using Application.ExternalServiceClients.CurrencyInfo;
 using Application.ExternalServiceClients.Geolocation;
 using Application.Interfaces;
 using Application.Options;
 using Application.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Refit;
 using System;
 
-namespace Application.Initialization;
-
+/// <summary>
+/// Class responsible for initializing the application services and external service clients.
+/// </summary>
 public static class ApplicationInitializer
 {
+    /// <summary>
+    /// Registers the application services and external service clients.
+    /// </summary>
+    /// <param name="services">The service collection to add the services to.</param>
+    /// <param name="externalServiceOptions">The options for the external service clients.</param>
+    /// <returns>The service collection with the registered services.</returns>
     public static IServiceCollection RegisterApplication(this IServiceCollection services, ExternalServiceOptions externalServiceOptions)
     {
         services

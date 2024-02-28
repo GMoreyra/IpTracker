@@ -1,4 +1,6 @@
-﻿using Api.Controllers;
+﻿namespace Tests;
+
+using Api.Controllers;
 using Application.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -6,8 +8,6 @@ using Moq;
 using Shouldly;
 using System;
 using Xunit;
-
-namespace Tests;
 
 public class TrackerControllerTests
 {
@@ -24,35 +24,50 @@ public class TrackerControllerTests
     [Fact]
     public void Should_Not_Throw()
     {
+        // Arrange
         Action act = () => Init_Test();
+
+        // Act & Assert
         act.ShouldNotThrow();
     }
 
     [Fact]
     public async void GetData_Should_Return_Ok()
     {
+        // Arrange
         Init_Test();
+
+        // Act
         var result = await _controller.GetGeolocation("1.0.0");
 
-        result.ShouldBeOfType<OkObjectResult>();
+        // Assert
+        result.Result.ShouldBeOfType<OkObjectResult>();
     }
 
     [Fact]
     public async void GetData_Should_Return_BadRequest()
     {
+        // Arrange
         Init_Test();
+
+        // Act
         var result = await _controller.GetGeolocation("1.0..0");
 
-        result.ShouldBeOfType<BadRequestResult>();
+        // Assert
+        result.Result.ShouldBeOfType<BadRequestObjectResult>();
     }
 
     [Fact]
     public async void GetData_Should_Return_NotFoundResult()
     {
+        // Arrange
         Init_Test();
         _mockService.Setup(p => p.GetIpInfo(It.IsAny<string>())).ReturnsAsync(() => null);
+
+        // Act
         var result = await _controller.GetGeolocation("1.0.0");
 
-        result.ShouldBeOfType<NotFoundResult>();
+        // Assert
+        result.Result.ShouldBeOfType<NotFoundObjectResult>();
     }
 }
