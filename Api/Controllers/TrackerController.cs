@@ -45,7 +45,7 @@ public class TrackerController : ControllerBase
             return BadRequest(ipAddress);
         }
 
-        var response = await _service.GetIpInfo(ipAddress);
+        var response = await _service.GetIpInformation(ipAddress);
 
         return response is null ? NotFound(response) : Ok(response);
     }

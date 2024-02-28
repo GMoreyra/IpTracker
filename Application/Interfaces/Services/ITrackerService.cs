@@ -14,7 +14,7 @@ public interface ITrackerService
     /// </summary>
     /// <param name="ipAddress">ip address</param>
     /// <returns></returns>
-    Task<IpInfoModel> GetIpInfo(string ipAddress);
+    Task<IpInfoModel> GetIpInformation(string ipAddress);
 
     /// <summary>
     /// Returns the maximum and minimum distance from Buenos Aires

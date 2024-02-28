@@ -2,7 +2,6 @@
 using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Models;
-using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,16 +13,14 @@ public class TrackerService : ITrackerService
 {
     private readonly ITrackerRepository _trackerRepository;
     private readonly IMapper _mapper;
-    private readonly IDistributedCache _memoryCache;
 
-    public TrackerService(ITrackerRepository trackerRepository, IMapper mapper, IDistributedCache memoryCache)
+    public TrackerService(ITrackerRepository trackerRepository, IMapper mapper)
     {
         _trackerRepository = trackerRepository ?? throw new ArgumentNullException(nameof(trackerRepository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _memoryCache = memoryCache ?? throw new ArgumentNullException(nameof(memoryCache));
     }
 
-    public async Task<IpInfoModel> GetIpInfo(string ipAddress)
+    public async Task<IpInfoModel> GetIpInformation(string ipAddress)
     {
         IpInfoModel ipInfoModel;
         var recordKey = KeyUtils.ADDRESS + ipAddress;
