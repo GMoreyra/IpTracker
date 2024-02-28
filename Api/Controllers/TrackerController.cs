@@ -1,5 +1,5 @@
 ﻿using Api.Contracts;
-using Application.Interfaces;
+using Application.Interfaces.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Utils;

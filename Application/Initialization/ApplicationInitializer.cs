@@ -3,7 +3,7 @@
 using Application.ExternalServiceClients.CountryInfo;
 using Application.ExternalServiceClients.CurrencyInfo;
 using Application.ExternalServiceClients.Geolocation;
-using Application.Interfaces;
+using Application.Interfaces.Services;
 using Application.Options;
 using Application.Services;
 using Microsoft.Extensions.DependencyInjection;

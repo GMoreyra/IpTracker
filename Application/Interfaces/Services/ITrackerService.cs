@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Domain.Models;
 
-namespace Application.Interfaces;
+namespace Application.Interfaces.Services;
 
 /// <summary>
 /// Interface for the Tracker service.

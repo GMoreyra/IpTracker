@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Repositories;
 using Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;

@@ -1,4 +1,4 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Repositories;
 using Application.Services;
 using AutoMapper;
 using Data.Mappers;

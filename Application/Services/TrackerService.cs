@@ -1,4 +1,5 @@
-﻿using Application.Interfaces;
+﻿using Application.Interfaces.Repositories;
+using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
