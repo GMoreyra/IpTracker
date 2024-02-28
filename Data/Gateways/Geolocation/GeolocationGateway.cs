@@ -1,7 +1,9 @@
 ﻿namespace Data.Gateways.Geolocation;
 
 using Application.ExternalServiceClients.Geolocation;
+using Application.ExternalServiceClients.Geolocation.Models;
 using System;
+using System.Threading.Tasks;
 
 public class GeolocationGateway
 {
@@ -10,5 +12,12 @@ public class GeolocationGateway
     public GeolocationGateway(IGeoLocationClient geolocationClient)
     {
         _geolocationClient = geolocationClient ?? throw new ArgumentNullException(nameof(geolocationClient));
+    }
+
+    public async Task<GeoLocationResponse> GetGeolocationInfo(string ipAddress)
+    {
+        var geolocationInformation = await _geolocationClient.GetGeoLocationInformation(ipAddress);
+
+        return geolocationInformation.Content;
     }
 }

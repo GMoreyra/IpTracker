@@ -1,5 +1,6 @@
 ﻿using Application.ExternalServiceClients.CountryInfo.Models;
 using Refit;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Application.ExternalServiceClients.CountryInfo;
@@ -14,5 +15,5 @@ public interface ICountryInformationClient
     /// </summary>
     /// <returns>A task that represents the asynchronous operation. The task result contains the ApiResponse of CountryInformationResponse.</returns>
     [Get("/all")]
-    Task<ApiResponse<CountryInformationResponse>> GetCountryInformation();
+    Task<ApiResponse<IEnumerable<CountryInformationResponse>>> GetAllCountriesInformation();
 }

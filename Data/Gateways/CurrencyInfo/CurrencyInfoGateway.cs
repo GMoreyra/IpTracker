@@ -1,7 +1,9 @@
 ﻿namespace Data.Gateways.CurrencyInfo;
 
 using Application.ExternalServiceClients.CurrencyInfo;
+using Application.ExternalServiceClients.CurrencyInfo.Models;
 using System;
+using System.Threading.Tasks;
 
 public class CurrencyInfoGateway
 {
@@ -10,5 +12,12 @@ public class CurrencyInfoGateway
     public CurrencyInfoGateway(ICurrencyInformationClient currencyInformationClient)
     {
         _currencyInformationClient = currencyInformationClient ?? throw new ArgumentNullException(nameof(currencyInformationClient));
+    }
+
+    public async Task<CurrencyInformationResponse> GetCurrencyInfo()
+    {
+        var currencyInformation = await _currencyInformationClient.GetCurrencyInformation();
+
+        return currencyInformation.Content;
     }
 }
