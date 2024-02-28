@@ -1,11 +1,9 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.IGateways;
+using Application.Interfaces.Repositories;
 using AutoMapper;
 using Data.Gateways.CountryInfo;
-using Data.Gateways.CountryInfo.Interface;
 using Data.Gateways.CurrencyInfo;
-using Data.Gateways.CurrencyInfo.Interface;
 using Data.Gateways.Geolocation;
-using Data.Gateways.Geolocation.Interface;
 using Data.Mappers;
 using Data.Repositories;
 using Microsoft.Extensions.Configuration;

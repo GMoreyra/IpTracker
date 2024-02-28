@@ -1,4 +1,4 @@
-﻿namespace Data.Gateways.CurrencyInfo.Interface;
+﻿namespace Application.IGateways;
 
 using Application.ExternalServiceClients.CurrencyInfo.Models;
 using System.Threading.Tasks;

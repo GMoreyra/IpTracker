@@ -2,7 +2,7 @@
 
 using Application.ExternalServiceClients.CountryInfo;
 using Application.ExternalServiceClients.CountryInfo.Models;
-using Data.Gateways.CountryInfo.Interface;
+using Application.IGateways;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

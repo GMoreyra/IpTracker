@@ -1,4 +1,5 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.IGateways;
+using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using AutoMapper;
 using Domain.Models;
@@ -13,11 +14,21 @@ public class TrackerService : ITrackerService
 {
     private readonly ITrackerRepository _trackerRepository;
     private readonly IMapper _mapper;
+    private readonly IGeolocationGateway _geolocationGateway;
+    private readonly ICountryInfoGateway _countryInfoGateway;
+    private readonly ICurrencyInfoGateway _currencyInfoGateway;
 
-    public TrackerService(ITrackerRepository trackerRepository, IMapper mapper)
+    public TrackerService(ITrackerRepository trackerRepository,
+                          IMapper mapper,
+                          IGeolocationGateway geolocationGateway,
+                          ICountryInfoGateway countryInfoGateway,
+                          ICurrencyInfoGateway currencyInfoGateway)
     {
         _trackerRepository = trackerRepository ?? throw new ArgumentNullException(nameof(trackerRepository));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _countryInfoGateway = countryInfoGateway ?? throw new ArgumentNullException(nameof(countryInfoGateway));
+        _geolocationGateway = geolocationGateway ?? throw new ArgumentNullException(nameof(geolocationGateway));
+        _currencyInfoGateway = currencyInfoGateway ?? throw new ArgumentNullException(nameof(currencyInfoGateway));
     }
 
     public async Task<IpInfoModel> GetIpInformation(string ipAddress)
