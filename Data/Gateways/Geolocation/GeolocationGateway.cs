@@ -1,4 +1,4 @@
-﻿namespace Data.Gateways.Geolocation;
+﻿namespace Infrastructure.Gateways.Geolocation;
 
 using Application.ExternalServiceClients.Geolocation;
 using Application.ExternalServiceClients.Geolocation.Models;

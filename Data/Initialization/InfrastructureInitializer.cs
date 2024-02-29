@@ -1,25 +1,22 @@
 ﻿using Application.IGateways;
 using Application.Interfaces.Repositories;
-using AutoMapper;
-using Data.Gateways.CountryInfo;
-using Data.Gateways.CurrencyInfo;
-using Data.Gateways.Geolocation;
-using Data.Mappers;
-using Data.Repositories;
+using Infrastructure.Gateways.CountryInfo;
+using Infrastructure.Gateways.CurrencyInfo;
+using Infrastructure.Gateways.Geolocation;
+using Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Utils;
 
-namespace Data.Initialization;
+namespace Infrastructure.Initialization;
 
-public static class DataInitializer
+public static class InfrastructureInitializer
 {
-    public static IServiceCollection RegisterData(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services
             .AddRespositories()
             .AddGateways()
-            .AddMapper()
             .AddRedis(configuration);
 
         return services;
@@ -48,19 +45,6 @@ public static class DataInitializer
             options.Configuration = config.GetConnectionString("Redis");
             options.InstanceName = KeyUtils.APP;
         });
-
-        return services;
-    }
-
-    private static IServiceCollection AddMapper(this IServiceCollection services)
-    {
-        var mapperConfig = new MapperConfiguration(m =>
-        {
-            m.AddProfile(new IpLocationToIpInfoProfile());
-        });
-
-        IMapper mapper = mapperConfig.CreateMapper();
-        services.AddSingleton(mapper);
 
         return services;
     }

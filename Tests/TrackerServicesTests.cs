@@ -1,7 +1,5 @@
 ﻿using Application.Interfaces.Repositories;
 using Application.Services;
-using AutoMapper;
-using Data.Mappers;
 using Domain.Models;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
@@ -21,14 +19,9 @@ public class TrackerServicesTests
 
     private void Init_Test()
     {
-        var mapper = new MapperConfiguration(m =>
-        {
-            m.AddProfile(new IpLocationToIpInfoProfile());
-        }).CreateMapper();
-
         _distributedCache = new Mock<IDistributedCache>();
         _mockRepo = new Mock<ITrackerRepository>();
-        _service = new TrackerService(_mockRepo.Object, mapper, _distributedCache.Object);
+        _service = new TrackerService(_mockRepo.Object, _distributedCache.Object);
         _mockRepo.Setup(p => p.ReturnCountryInfo(It.IsAny<string>())).ReturnsAsync(new IpToLocationModel());
         _mockRepo.Setup(p => p.ReturnMoneyInfo(It.IsAny<List<string>>())).ReturnsAsync([]);
     }

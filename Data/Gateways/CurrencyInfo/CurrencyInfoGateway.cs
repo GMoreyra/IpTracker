@@ -1,4 +1,4 @@
-﻿namespace Data.Gateways.CurrencyInfo;
+﻿namespace Infrastructure.Gateways.CurrencyInfo;
 
 using Application.ExternalServiceClients.CurrencyInfo;
 using Application.ExternalServiceClients.CurrencyInfo.Models;

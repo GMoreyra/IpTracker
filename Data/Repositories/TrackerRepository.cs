@@ -1,106 +1,97 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.ExternalServiceClients.CountryInfo.Models;
+using Application.ExternalServiceClients.CurrencyInfo.Models;
+using Application.ExternalServiceClients.Geolocation.Models;
+using Application.Interfaces.Repositories;
 using Domain.Models;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
 using NRedisStack;
-using RestSharp;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Utils;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
-namespace Data.Repositories;
+namespace Infrastructure.Repositories;
 
 public class TrackerRepository : ITrackerRepository
 {
     private static readonly string _apiKey = "z6MKj5YtvvtUnORpxxvASLIUvzfeo4Aq";
-    private static readonly string _urlIpToLocation = "https://api.apilayer.com/ip_to_location/";
-    private static readonly string _urlFixer = "https://api.apilayer.com/fixer/";
     private static readonly string _patternKey = KeyUtils.APP + KeyUtils.STATISTIC + "*";
-    private IpToLocationModel ipToLocation;
 
-    private readonly IDistributedCache _memoryCache;
-
-    public TrackerRepository(IDistributedCache memoryCache)
+    public void SetGeolocationInformation(GeoLocationResponse geoLocation)
     {
-        _memoryCache = memoryCache;
-    }
+        using var redis = ConnectionMultiplexer.Connect("localhost");
+        IDatabase db = redis.GetDatabase();
 
-    public async Task<IpToLocationModel> ReturnCountryInfo(string ipAddress)
-    {
-        ipToLocation = new IpToLocationModel();
-        var response = await GetResponseFromAPI(ipAddress, _urlIpToLocation);
+        var value = db.StringGet(KeyUtils.APP + "geolocation_" + geoLocation.Ip);
 
-        if (response.IsSuccessful)
+        var geoLocationSerialized = JsonSerializer.Serialize(geoLocation);
+
+        if (!value.HasValue)
         {
-            ipToLocation = JsonConvert.DeserializeObject<IpToLocationModel>(response.Content);
-        }
-
-        return ipToLocation;
-    }
-
-    public async Task<List<string>> ReturnMoneyInfo(List<string> currenciesCode)
-    {
-        var results = new List<string>();
-
-        foreach (var code in currenciesCode)
-        {
-            var recordKey = KeyUtils.CURRENCY + code;
-            var cached = await _memoryCache.GetRecordAsync<string>(recordKey);
-
-            if (cached is null)
-            {
-                var parameters = string.Format("convert?to={0}&from={1}&amount={2}", "USD", code, "1");
-                var response = await GetResponseFromAPI(parameters, _urlFixer);
-
-                if (response.IsSuccessful)
-                {
-                    var fixer = JsonConvert.DeserializeObject<FixerModel>(response.Content);
-                    results.Add(fixer.Result);
-
-                    await _memoryCache.SetRecordAsync(recordKey, fixer.Result);
-                }
-            }
-            else
-            {
-                results.Add(cached);
-            }
-        };
-
-        return results;
-    }
-
-    public async void AddStatistic(IpInfoModel ipInfoModel)
-    {
-        if (ipInfoModel is not null
-            && !string.IsNullOrWhiteSpace(ipInfoModel.DistanceToBA)
-            && !string.IsNullOrWhiteSpace(ipInfoModel.Country))
-        {
-            var statsKey = GetStatiscticKey(ipInfoModel);
-            var cached = await _memoryCache.GetRecordAsync<StatisticModel>(statsKey);
-
-            if (cached is null)
-            {
-                var statistic = new StatisticModel()
-                {
-                    CountryName = ipInfoModel.Country,
-                    DistanceToBaInKms = StringUtils.StringKmsToInt(ipInfoModel.DistanceToBA)
-                };
-
-                await _memoryCache.SetRecordAsync(statsKey, statistic, TimeSpan.FromHours(1));
-            }
-            else
-            {
-                await _memoryCache.RemoveAsync(statsKey);
-
-                cached.InvocationCounter++;
-
-                await _memoryCache.SetRecordAsync(statsKey, cached, TimeSpan.FromHours(1));
-            }
+            db.StringSet(KeyUtils.APP + "geolocation_", geoLocationSerialized);
         }
     }
+
+    public void SetCurrenciesInformation(CurrencyInformationResponse currencyInformation)
+    {
+        using var redis = ConnectionMultiplexer.Connect("localhost");
+        IDatabase db = redis.GetDatabase();
+
+        var value = db.StringGet(KeyUtils.APP + "currencies");
+
+        var currencySerialized = JsonSerializer.Serialize(currencyInformation);
+
+        if (!value.HasValue)
+        {
+            db.StringSet(KeyUtils.APP + "currencies", currencySerialized);
+        }
+    }
+
+    public void SetCountriesInformation(IEnumerable<CountryInformationResponse> countryInformationResponses)
+    {
+        using var redis = ConnectionMultiplexer.Connect("localhost");
+        IDatabase db = redis.GetDatabase();
+
+        var value = db.StringGet(KeyUtils.APP + "countries");
+        var currencySerialized = JsonSerializer.Serialize(countryInformationResponses);
+
+        if (!value.HasValue)
+        {
+            db.StringSet(KeyUtils.APP + "countries", currencySerialized);
+        }
+    }
+
+    //public async void AddStatistic(IpInfoModel ipInfoModel)
+    //{
+    //    if (ipInfoModel is not null
+    //        && !string.IsNullOrWhiteSpace(ipInfoModel.DistanceToBA)
+    //        && !string.IsNullOrWhiteSpace(ipInfoModel.Country))
+    //    {
+    //        var statsKey = GetStatiscticKey(ipInfoModel);
+    //        var cached = await _memoryCache.GetRecordAsync<StatisticModel>(statsKey);
+
+    //        if (cached is null)
+    //        {
+    //            var statistic = new StatisticModel()
+    //            {
+    //                CountryName = ipInfoModel.Country,
+    //                DistanceToBaInKms = StringUtils.StringKmsToInt(ipInfoModel.DistanceToBA)
+    //            };
+
+    //            await _memoryCache.SetRecordAsync(statsKey, statistic, TimeSpan.FromHours(1));
+    //        }
+    //        else
+    //        {
+    //            await _memoryCache.RemoveAsync(statsKey);
+
+    //            cached.InvocationCounter++;
+
+    //            await _memoryCache.SetRecordAsync(statsKey, cached, TimeSpan.FromHours(1));
+    //        }
+    //    }
+    //}
 
     private string GetStatiscticKey(IpInfoModel ipInfoModel)
     {
@@ -118,24 +109,14 @@ public class TrackerRepository : ITrackerRepository
         await using var redis = ConnectionMultiplexer.Connect("localhost");
         IDatabase db = redis.GetDatabase();
 
-        StatisticModel statistics = new() { CountryName = "Argentina", DistanceToBaInKms = 100 };
-        var text = System.Text.Json.JsonSerializer.Serialize(statistics);
-
-        var value = db.StringGet(_patternKey + "123.123.123");
-
-        if (!value.HasValue)
-        {
-            bool status = db.StringSet(_patternKey + "123.123.123", text);
-        }
-
         var keys = redis.GetServer("redis_image:6379").Keys(pattern: _patternKey, pageSize: 1000);
         var keysArr = keys.Select(key => (string)key).ToArray();
         foreach (var key in keysArr)
         {
             var statsKey = key.Replace(KeyUtils.APP, "");
-            var result = await _memoryCache.GetRecordAsync<StatisticModel>(statsKey);
+            var result = await db.StringGetAsync(statsKey);
 
-            allStatistics.Add(result);
+            allStatistics.Add(JsonSerializer.Deserialize<StatisticModel>(result));
         }
 
         return allStatistics;
@@ -166,10 +147,10 @@ public class TrackerRepository : ITrackerRepository
     {
         if (statisticModels is null || statisticModels.Count == 0)
         {
-            return new List<StatisticModel>();
+            return [];
         }
 
-        var minMaxStats = new List<StatisticModel>();
+        List<StatisticModel> minMaxStats = [];
         var maxStatisticModel = MinMaxStatisticModel(statisticModels, "Max");
         var minStatisticModel = MinMaxStatisticModel(statisticModels, "Min");
 
@@ -179,15 +160,15 @@ public class TrackerRepository : ITrackerRepository
         return minMaxStats;
     }
 
-    private StatisticModel MinMaxStatisticModel(List<StatisticModel> statisticModels, string method)
+    private static StatisticModel MinMaxStatisticModel(List<StatisticModel> statisticModels, string method)
     {
         var distanceValue = 0;
 
-        if (method.ToUpper() == "MAX")
+        if (method.Equals("MAX", StringComparison.CurrentCultureIgnoreCase))
         {
             distanceValue = statisticModels.Max(d => d.DistanceToBaInKms);
         }
-        else if (method.ToUpper() == "MIN")
+        else if (method.Equals("MIN", StringComparison.CurrentCultureIgnoreCase))
         {
             distanceValue = statisticModels.Min(d => d.DistanceToBaInKms);
         }
@@ -196,15 +177,5 @@ public class TrackerRepository : ITrackerRepository
         var statisticModel = statisticModels.Where(x => x.DistanceToBaInKms == distanceValue && x.InvocationCounter == invocationValue).First();
 
         return statisticModel;
-    }
-
-    private async Task<RestResponse> GetResponseFromAPI(string parameter, string url)
-    {
-        var client = new RestClient(url);
-        var request = new RestRequest(parameter);
-        request.AddHeader("apikey", _apiKey);
-        var response = await client.ExecuteGetAsync(request);
-
-        return response;
     }
 }

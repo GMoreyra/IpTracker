@@ -1,11 +1,11 @@
-﻿using Data.Repositories;
-using Domain.Models;
+﻿using Domain.Models;
 using Moq;
 using System;
 using System.Collections.Generic;
 using Xunit;
 using Shouldly;
 using Microsoft.Extensions.Caching.Distributed;
+using Infrastructure.Repositories;
 
 namespace Tests;
 

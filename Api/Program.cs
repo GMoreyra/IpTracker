@@ -1,6 +1,6 @@
 using Application.Initialization;
 using Application.Options;
-using Data.Initialization;
+using Infrastructure.Initialization;
 var builder = WebApplication.CreateBuilder(args);
 
 //TODO: Improve this configuration
@@ -8,7 +8,7 @@ var positionOptions = builder.Configuration.GetSection(ExternalServiceOptions.Ex
                                            .Get<ExternalServiceOptions>();
 
 builder.Services.RegisterApplication(positionOptions);
-builder.Services.RegisterData(builder.Configuration);
+builder.Services.RegisterInfrastructure(builder.Configuration);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

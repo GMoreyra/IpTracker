@@ -1,4 +1,4 @@
-﻿namespace Data.Gateways.CountryInfo;
+﻿namespace Infrastructure.Gateways.CountryInfo;
 
 using Application.ExternalServiceClients.CountryInfo;
 using Application.ExternalServiceClients.CountryInfo.Models;
