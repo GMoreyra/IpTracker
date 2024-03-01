@@ -1,9 +1,9 @@
-﻿using Application.ExternalServiceClients.CountryInfo.Models;
+﻿using Application.ExternalClients.CountryInfo.Models;
 using Refit;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Application.ExternalServiceClients.CountryInfo;
+namespace Application.ExternalClients.CountryInfo;
 
 /// <summary>
 /// Interface for the client that communicates with the Country Information external service.

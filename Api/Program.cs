@@ -4,8 +4,8 @@ using Infrastructure.Initialization;
 var builder = WebApplication.CreateBuilder(args);
 
 //TODO: Improve this configuration
-var positionOptions = builder.Configuration.GetSection(ExternalServiceOptions.ExternalServiceSectionName)
-                                           .Get<ExternalServiceOptions>();
+var positionOptions = builder.Configuration.GetSection(ExternalClientOptions.ExternalServiceSectionName)
+                                           .Get<ExternalClientOptions>();
 
 builder.Services.RegisterApplication(positionOptions);
 builder.Services.RegisterInfrastructure(builder.Configuration);

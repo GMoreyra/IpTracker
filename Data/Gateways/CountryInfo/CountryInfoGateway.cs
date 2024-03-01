@@ -1,7 +1,7 @@
 ﻿namespace Infrastructure.Gateways.CountryInfo;
 
-using Application.ExternalServiceClients.CountryInfo;
-using Application.ExternalServiceClients.CountryInfo.Models;
+using Application.ExternalClients.CountryInfo;
+using Application.ExternalClients.CountryInfo.Models;
 using Application.Interfaces.IGateways;
 using System;
 using System.Collections.Generic;

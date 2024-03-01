@@ -1,7 +1,7 @@
 ﻿namespace Infrastructure.Gateways.Geolocation;
 
-using Application.ExternalServiceClients.Geolocation;
-using Application.ExternalServiceClients.Geolocation.Models;
+using Application.ExternalClients.Geolocation;
+using Application.ExternalClients.Geolocation.Models;
 using Application.Interfaces.IGateways;
 using System;
 using System.Threading.Tasks;

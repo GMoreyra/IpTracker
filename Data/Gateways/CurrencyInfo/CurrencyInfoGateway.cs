@@ -1,7 +1,7 @@
 ﻿namespace Infrastructure.Gateways.CurrencyInfo;
 
-using Application.ExternalServiceClients.CurrencyInfo;
-using Application.ExternalServiceClients.CurrencyInfo.Models;
+using Application.ExternalClients.CurrencyInfo;
+using Application.ExternalClients.CurrencyInfo.Models;
 using Application.Interfaces.IGateways;
 using System;
 using System.Threading.Tasks;

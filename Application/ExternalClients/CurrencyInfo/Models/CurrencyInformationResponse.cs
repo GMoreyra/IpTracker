@@ -1,4 +1,4 @@
-﻿namespace Application.ExternalServiceClients.CurrencyInfo.Models;
+﻿namespace Application.ExternalClients.CurrencyInfo.Models;
 
 public class CurrencyInformationResponse
 {

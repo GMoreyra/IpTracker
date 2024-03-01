@@ -1,8 +1,8 @@
-﻿using Application.ExternalServiceClients.Geolocation.Models;
+﻿using Application.ExternalClients.Geolocation.Models;
 using Refit;
 using System.Threading.Tasks;
 
-namespace Application.ExternalServiceClients.Geolocation;
+namespace Application.ExternalClients.Geolocation;
 
 /// <summary>
 /// Interface for the GeoLocation client.

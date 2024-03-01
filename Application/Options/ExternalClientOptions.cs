@@ -1,8 +1,8 @@
 ﻿namespace Application.Options;
 
-public class ExternalServiceOptions
+public class ExternalClientOptions
 {
-    public const string ExternalServiceSectionName = "ExternalServiceClients";
+    public const string ExternalServiceSectionName = "ExternalClients";
 
     public required string CountryClient { get; set; }
 

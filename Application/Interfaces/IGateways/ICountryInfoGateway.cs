@@ -1,6 +1,6 @@
 ﻿namespace Application.Interfaces.IGateways;
 
-using Application.ExternalServiceClients.CountryInfo.Models;
+using Application.ExternalClients.CountryInfo.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

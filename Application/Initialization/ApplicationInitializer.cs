@@ -1,8 +1,8 @@
 ﻿namespace Application.Initialization;
 
-using Application.ExternalServiceClients.CountryInfo;
-using Application.ExternalServiceClients.CurrencyInfo;
-using Application.ExternalServiceClients.Geolocation;
+using Application.ExternalClients.CountryInfo;
+using Application.ExternalClients.CurrencyInfo;
+using Application.ExternalClients.Geolocation;
 using Application.Interfaces.Services;
 using Application.Options;
 using Application.Services;
@@ -21,7 +21,7 @@ public static class ApplicationInitializer
     /// <param name="services">The service collection to add the services to.</param>
     /// <param name="externalServiceOptions">The options for the external service clients.</param>
     /// <returns>The service collection with the registered services.</returns>
-    public static IServiceCollection RegisterApplication(this IServiceCollection services, ExternalServiceOptions externalServiceOptions)
+    public static IServiceCollection RegisterApplication(this IServiceCollection services, ExternalClientOptions externalServiceOptions)
     {
         services
             .AddServices()
@@ -37,7 +37,7 @@ public static class ApplicationInitializer
         return services;
     }
 
-    private static IServiceCollection AddRefit(this IServiceCollection services, ExternalServiceOptions externalServiceOptions)
+    private static IServiceCollection AddRefit(this IServiceCollection services, ExternalClientOptions externalServiceOptions)
     {
         services
             .AddRefitClient<IGeoLocationClient>()

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace Application.ExternalServiceClients.Geolocation.Models;
+namespace Application.ExternalClients.Geolocation.Models;
 
 public class GeoLocationResponse
 {

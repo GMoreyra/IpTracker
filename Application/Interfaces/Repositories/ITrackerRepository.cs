@@ -1,6 +1,6 @@
-﻿using Application.ExternalServiceClients.CountryInfo.Models;
-using Application.ExternalServiceClients.CurrencyInfo.Models;
-using Application.ExternalServiceClients.Geolocation.Models;
+﻿using Application.ExternalClients.CountryInfo.Models;
+using Application.ExternalClients.CurrencyInfo.Models;
+using Application.ExternalClients.Geolocation.Models;
 using Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
