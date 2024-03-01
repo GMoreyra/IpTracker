@@ -1,4 +1,6 @@
-﻿using Application.ExternalClients.CountryInfo.Models;
+﻿namespace Application.Services;
+
+using Application.ExternalClients.CountryInfo.Models;
 using Application.ExternalClients.CurrencyInfo.Models;
 using Application.ExternalClients.Geolocation.Models;
 using Application.Interfaces.IGateways;
@@ -8,8 +10,6 @@ using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-namespace Application.Services;
 
 public class TrackerService : ITrackerService
 {

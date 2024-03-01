@@ -1,11 +1,11 @@
-﻿using Application.ExternalClients.CountryInfo.Models;
+﻿namespace Application.Interfaces.Repositories;
+
+using Application.ExternalClients.CountryInfo.Models;
 using Application.ExternalClients.CurrencyInfo.Models;
 using Application.ExternalClients.Geolocation.Models;
 using Domain.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
-namespace Application.Interfaces.Repositories;
 
 public interface ITrackerRepository
 {

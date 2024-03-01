@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.IGateways;
+﻿namespace Infrastructure.Initialization;
+
+using Application.Interfaces.IGateways;
 using Application.Interfaces.Repositories;
 using Infrastructure.Gateways.CountryInfo;
 using Infrastructure.Gateways.CurrencyInfo;
@@ -7,8 +9,6 @@ using Infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Utils;
-
-namespace Infrastructure.Initialization;
 
 public static class InfrastructureInitializer
 {

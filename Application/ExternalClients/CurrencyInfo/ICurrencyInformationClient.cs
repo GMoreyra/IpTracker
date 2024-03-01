@@ -1,8 +1,8 @@
-﻿using Application.ExternalClients.CurrencyInfo.Models;
+﻿namespace Application.ExternalClients.CurrencyInfo;
+
+using Application.ExternalClients.CurrencyInfo.Models;
 using Refit;
 using System.Threading.Tasks;
-
-namespace Application.ExternalClients.CurrencyInfo;
 
 /// <summary>
 /// Interface for the client that communicates with the external currency information service.

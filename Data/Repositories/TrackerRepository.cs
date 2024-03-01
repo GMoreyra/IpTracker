@@ -1,4 +1,6 @@
-﻿using Application.ExternalClients.CountryInfo.Models;
+﻿namespace Infrastructure.Repositories;
+
+using Application.ExternalClients.CountryInfo.Models;
 using Application.ExternalClients.CurrencyInfo.Models;
 using Application.ExternalClients.Geolocation.Models;
 using Application.Interfaces.Repositories;
@@ -11,8 +13,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Utils;
 using JsonSerializer = System.Text.Json.JsonSerializer;
-
-namespace Infrastructure.Repositories;
 
 public class TrackerRepository : ITrackerRepository
 {

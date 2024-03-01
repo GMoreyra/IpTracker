@@ -1,6 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace Application.ExternalClients.CountryInfo.Models;
 
-namespace Application.ExternalClients.CountryInfo.Models;
+using System.Text.Json.Serialization;
 
 public class CountryInformationResponse
 {

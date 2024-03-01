@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿namespace Application.Interfaces.Services;
+
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Domain.Models;
-
-namespace Application.Interfaces.Services;
 
 /// <summary>
 /// Interface for the Tracker service.
