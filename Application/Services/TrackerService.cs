@@ -1,7 +1,7 @@
 ﻿using Application.ExternalServiceClients.CountryInfo.Models;
 using Application.ExternalServiceClients.CurrencyInfo.Models;
 using Application.ExternalServiceClients.Geolocation.Models;
-using Application.IGateways;
+using Application.Interfaces.IGateways;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Models;

@@ -2,7 +2,7 @@
 
 using Application.ExternalServiceClients.Geolocation;
 using Application.ExternalServiceClients.Geolocation.Models;
-using Application.IGateways;
+using Application.Interfaces.IGateways;
 using System;
 using System.Threading.Tasks;
 

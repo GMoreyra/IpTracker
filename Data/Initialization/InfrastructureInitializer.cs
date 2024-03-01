@@ -1,4 +1,4 @@
-﻿using Application.IGateways;
+﻿using Application.Interfaces.IGateways;
 using Application.Interfaces.Repositories;
 using Infrastructure.Gateways.CountryInfo;
 using Infrastructure.Gateways.CurrencyInfo;

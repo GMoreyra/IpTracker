@@ -1,4 +1,4 @@
-﻿namespace Application.IGateways;
+﻿namespace Application.Interfaces.IGateways;
 
 using Application.ExternalServiceClients.Geolocation.Models;
 using System.Threading.Tasks;

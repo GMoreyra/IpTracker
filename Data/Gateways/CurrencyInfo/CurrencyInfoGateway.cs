@@ -2,7 +2,7 @@
 
 using Application.ExternalServiceClients.CurrencyInfo;
 using Application.ExternalServiceClients.CurrencyInfo.Models;
-using Application.IGateways;
+using Application.Interfaces.IGateways;
 using System;
 using System.Threading.Tasks;
 
