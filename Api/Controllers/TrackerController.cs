@@ -1,12 +1,12 @@
-﻿using Api.Contracts;
+﻿namespace Api.Controllers;
+
+using Api.Contracts;
+using Api.Validators;
 using Application.Interfaces.Services;
 using Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using Utils;
 
 using Media = System.Net.Mime.MediaTypeNames;
-
-namespace Api.Controllers;
 
 /// <summary>
 /// Controller for tracking IP addresses.
@@ -40,7 +40,7 @@ public class TrackerController : ControllerBase
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetGeolocationResponse>> GetGeolocation(string ipAddress)
     {
-        if (!StringUtils.ValidateString(ipAddress))
+        if (!IpAddressValidator.IsIpAddressValid(ipAddress))
         {
             return BadRequest(ipAddress);
         }
